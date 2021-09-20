@@ -206,5 +206,11 @@ export default {
 </script>
 
 <style>
+.ocultar {
+    display: none;
+}
 
+.mostrar {
+    display: block;
+}
 </style>

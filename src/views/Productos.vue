@@ -7,7 +7,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/Pc-Gamer.png">
+                        <img class="pic-1" src="../Images/Pc-Gamer.png#">
                     </a>
                     <ul class="social">
                         <li><a href="" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -37,7 +37,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/camiseta.png">
+                        <img class="pic-1" src="../Images/camiseta.png#">
                     </a>
                     <ul class="social">
                         <li><a href="" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -67,7 +67,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/zapatos.png">
+                        <img class="pic-1" src="../Images/zapatos.png#">
                     </a>
                     <ul class="social">
                         <li><a href="" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -97,7 +97,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/silla-gamer.png">
+                        <img class="pic-1" src="../Images/silla-gamer.png#">
                     </a>
                     <ul class="social">
                         <li><a href="product-details.html" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -135,7 +135,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
 
 /********************* shopping Demo-1 **********************/
