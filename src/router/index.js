@@ -1,19 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Productos from '../views/Productos.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/productos',
     name: 'Productos',
-    component: Productos
+    component: () => import(/* webpackChunkName: "about" */ '../views/Productos.vue')
   },
   {
-    path: '/Login',
+    path: '/login',
     name: 'Ingreso',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+  },
+  {
+    path: '/registro',
+    name: 'Registro',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Registro.vue')
   }
 ]
 
