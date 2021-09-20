@@ -1,5 +1,5 @@
 <template>
-  <main>
+    <main>
         <div id="msg"></div>
 
         <!-- Mensajes de Verificación -->
