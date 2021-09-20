@@ -1,5 +1,5 @@
 <template>
-  <main>
+    <main>
         <div id="msg"></div>
 
         <!-- Mensajes de Verificación -->
@@ -206,5 +206,11 @@ export default {
 </script>
 
 <style>
+.ocultar {
+    display: none;
+}
 
+.mostrar {
+    display: block;
+}
 </style>
