@@ -69,15 +69,15 @@
 
         <!-- 	product Information-->
         <div class="info">
-        <h2>DESCRIPCION MAMALONA</h2>
+        <h2>DESCRIPCION SERIA</h2>
         <ul>
             <li><strong>Tamaño: </strong>XL</li>
             <li><strong>Color: </strong>Negro</li>
             <li><strong>Marca: </strong>G2</li>
-            <li><strong>Soporta:</strong>1T de peso</li>
             <li><strong>Cuidados: </strong>No mojar</li>
             <li><strong>Vendedor: </strong>Benito</li>
             <li><strong>Detalles: </strong>Gamer, Ergonomica, con rueditas</li>
+             <li><strong>Garantia </strong>1 Año</li>
         </ul>
         </div>
     </div>
@@ -85,6 +85,13 @@
     </div>
 </html>
 </template>
+
+
+
+
+
+
+
 
 
 
@@ -99,13 +106,13 @@ background: #eeebeb;
 	}
 
 #container{
-	box-shadow: 0 15px 30px 1px rgba(5, 5, 5, 0.31);
-	background: rgba(255, 255, 255, 0.90);
+	box-shadow: 0 15px 30px 1px rgba(0, 0, 0, 0.883);
+	background: rgba(255, 255, 255, 0.9);
 	text-align: center;
 	border-radius: 5px;
 	overflow: hidden;
 	margin: 5em auto;
-	height: 500px;
+	height: 550px;
 	width: 900px;
 	
 }
@@ -130,7 +137,7 @@ background: #eeebeb;
 	display: inline-block;
 	position: relative;
 	font-size: 34px;
-	color: #344055;
+	color: #005eff;
 	margin: 0;
 	
 }
@@ -150,7 +157,7 @@ background: #eeebeb;
 	font-family: 'Farsan', cursive;
 	text-align: center;
 	font-size: 20px;
-	color: #7d7d7d;
+	color: #ff0000;
 	
 }
 
@@ -158,7 +165,7 @@ background: #eeebeb;
 
 .control{
 	position: absolute;
-	bottom: 6%;
+	bottom: 15%;
 	left: 6%;
 	display: inline-flex;
 	
@@ -167,23 +174,39 @@ background: #eeebeb;
 
 .control2{
 	position: absolute;
-	bottom: 10%;
-	left: 80%;
+	bottom: 11%;
+	left: 10%;
 	display: inline-flex;
 	
 }
 /* the Button */
-.btn {
+.buy {
+    background: rgba(45, 156, 48) ;
 	transform: translateY(1px);
 	transition: 0.3s linear;
-	background: rgb(45, 156, 48) ;
 	border-radius: 55px;
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 	cursor: pointer;
 	outline: none;
 	border: none;
-	color: rgb(251, 0, 0);
+	color: rgb(255, 255, 255);
+	padding: 0;
+	margin: 0;
+	
+}
+
+.price {
+    background: rgba(45, 156, 48) ;
+	transform: translateY(1px);
+	transition: 0.3s linear;
+	border-radius: 55px;
+    position: relative;
+    overflow: hidden;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: rgb(255, 255, 255);
 	padding: 0;
 	margin: 0;
 	
@@ -202,7 +225,7 @@ background: #eeebeb;
 }
 /* shopping cart icon */
 .btn .price, .shopping-cart{
-	background: rgb(255, 255, 255);
+	background: rgb(0, 0, 0);
 	border: 0;
 	margin: 0;
 }
@@ -229,7 +252,7 @@ background: #eeebeb;
 	position: relative;
 	overflow: hidden;
 	height: 100%;
-	width: 50%;
+	width: 56%;
 	display: inline-block;
 }
 
@@ -241,14 +264,14 @@ background: #eeebeb;
     transition: all 0.3s ease-out;
     transform: translateX(-100%);
     position: absolute;
-    line-height: 1.9;
+    line-height: 2;
     text-align: left;
-    font-size: 120%;
+    font-size: 140%;
     cursor: no-drop;
     color: #FFF;
-    height: 100%;
-    width: 100%;
-    left: 0;
+    height: 110%;
+    width: 110%;
+    left: 100;
     top: 0;
 }
 
