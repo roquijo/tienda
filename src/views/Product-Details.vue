@@ -1,0 +1,329 @@
+<template>
+<html>
+    <div id="container">
+    <div class="product-details">
+        <font size="6" face="Comic Sans MS,arial,verdana"><b>G2 Silla</b></font>
+
+        <span class="hint-star star">
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+        <i class="fa fa-star-o" aria-hidden="true"></i>
+        </span>
+
+        <br /><br />
+        <!-- The most important information about the product -->
+        <i class="information"
+        >"La poderosisima Silla de G2, los mejores se han sentado en esta
+        silla Como MixWell, Koldamente, Nukye, grandes jugadores profesionales
+        de G2. Firmada por el mismiso Lucas Rojo. Con esta silla no tendras
+        mas excusas asi que pasaras de ser un completo fracaso en los E-Sport
+        a ser la estrella del Torneo."
+        </i>
+
+        <!-- 		Control -->
+        <div class="control">
+        <!-- Start Button buying -->
+        <button class="btn">
+            <!-- 		the Price -->
+            <span class="price">Por solo 999 dolarucos</span>
+            <!-- 		shopping cart icon-->
+
+            <!-- 		Buy Now / ADD to Cart-->
+            <span class="buy">COMPRAR YA!!</span>
+        </button>
+        <!-- End Button buying -->
+        </div>
+
+        <div class="control2">
+        <span class="number-input">
+            <button
+            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+            ></button>
+            <input
+            class="quantity"
+            min="1"
+            max="99"
+            name="quantity"
+            value="1"
+            type="number"
+            />
+            <button
+            onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+            class="plus"
+            ></button>
+        </span>
+        </div>
+    </div>
+
+    <!-- 	End	Product details   -->
+
+    <!-- 	Start product image & Information -->
+
+    <div class="product-image">
+        <img
+        src="https://cdn.shopify.com/s/files/1/0548/8554/8183/products/G2SL2021Chair-Front_900x.jpg?v=1628169262"
+        alt="Omar Dsoky"
+        />
+
+        <!-- 	product Information-->
+        <div class="info">
+        <h2>DESCRIPCION MAMALONA</h2>
+        <ul>
+            <li><strong>Tamaño: </strong>XL</li>
+            <li><strong>Color: </strong>Negro</li>
+            <li><strong>Marca: </strong>G2</li>
+            <li><strong>Soporta:</strong>1T de peso</li>
+            <li><strong>Cuidados: </strong>No mojar</li>
+            <li><strong>Vendedor: </strong>Benito</li>
+            <li><strong>Detalles: </strong>Gamer, Ergonomica, con rueditas</li>
+        </ul>
+        </div>
+    </div>
+    <!--  End product image  -->
+    </div>
+</html>
+</template>
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Abel|Aguafina+Script|Artifika|Athiti|Condiment|Dosis|Droid+Serif|Farsan|Gurajada|Josefin+Sans|Lato|Lora|Merriweather|Noto+Serif|Open+Sans+Condensed:300|Playfair+Display|Rasa|Sahitya|Share+Tech|Text+Me+One|Titillium+Web');
+
+body {
+background: #eeebeb;
+	background-image: linear-gradient( 135deg, #ffffff 10%, #000000 100%);
+	background-attachment: fixed;	
+	background-size: cover;
+	}
+
+#container{
+	box-shadow: 0 15px 30px 1px rgba(5, 5, 5, 0.31);
+	background: rgba(255, 255, 255, 0.90);
+	text-align: center;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 5em auto;
+	height: 500px;
+	width: 900px;
+	
+}
+
+
+
+/* 	Product details  */
+.product-details {
+	position: relative;
+	text-align: left;
+	overflow: hidden;
+	padding: 30px;
+	height: 100%;
+	float: left;
+	width: 40%;
+
+}
+
+/* 	Product Name */
+#container .product-details h1{
+	font-family: 'Old Standard TT', serif;
+	display: inline-block;
+	position: relative;
+	font-size: 34px;
+	color: #344055;
+	margin: 0;
+	
+}
+
+
+/*Product Rating  */
+.hint-star {
+	display: inline-block;
+	margin-left: 0.5em;
+	color: gold;
+	width: 50%;
+}
+
+
+/* The most important information about the product */
+#container .product-details > p {
+	font-family: 'Farsan', cursive;
+	text-align: center;
+	font-size: 20px;
+	color: #7d7d7d;
+	
+}
+
+/* control */
+
+.control{
+	position: absolute;
+	bottom: 6%;
+	left: 6%;
+	display: inline-flex;
+	
+}
+
+
+.control2{
+	position: absolute;
+	bottom: 10%;
+	left: 80%;
+	display: inline-flex;
+	
+}
+/* the Button */
+.btn {
+	transform: translateY(1px);
+	transition: 0.3s linear;
+	background: rgb(45, 156, 48) ;
+	border-radius: 55px;
+  position: relative;
+  overflow: hidden;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: rgb(251, 0, 0);
+	padding: 0;
+	margin: 0;
+	
+}
+
+.btn:hover{transform: translateY(-4px);}
+
+.btn span {
+	font-family: 'Farsan', cursive;
+	transition: transform 0.3s;
+	display: inline-block;
+  padding: 10px 20px;
+	font-size: 1.2em;
+	margin:0;
+	
+}
+/* shopping cart icon */
+.btn .price, .shopping-cart{
+	background: rgb(255, 255, 255);
+	border: 0;
+	margin: 0;
+}
+
+.btn .price {
+	transform: translateX(-10%); padding-right: 15px;
+}
+
+
+/* buy */
+.btn .buy {z-index: 3; font-weight: bolder;}
+
+
+.btn:hover .price {transform: translateX(-110%);}
+
+.btn:hover .shopping-cart {transform: translateX(0%);}
+
+
+
+/* product image  */
+.product-image {
+	transition: all 0.3s ease-out;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	width: 50%;
+	display: inline-block;
+}
+
+#container img {width: 100%;height: 100%;}
+
+.info {
+    background: rgba(27, 26, 26, 0.9);
+    font-family: 'Farsan', cursive;
+    transition: all 0.3s ease-out;
+    transform: translateX(-100%);
+    position: absolute;
+    line-height: 1.9;
+    text-align: left;
+    font-size: 120%;
+    cursor: no-drop;
+    color: #FFF;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.info h2 {text-align: center}
+.product-image:hover .info{transform: translateX(0);}
+
+.info ul li{transition: 0.3s ease;}
+.info ul li:hover{transform: translateX(50px) scale(1.3);}
+
+.product-image:hover img {transition: all 0.3s ease-out;}
+.product-image:hover img {transform: scale(1.2, 1.2);}
+
+
+
+
+
+
+input[type="number"] {
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
+	appearance: textfield;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+  }
+  
+  .number-input {
+	border: 1px solid rgb(206, 206, 206);
+	display: inline-flex;
+  }
+  
+  .number-input,
+  .number-input * {
+	box-sizing: border-box;
+  }
+  
+  .number-input button {
+	outline:none;
+	-webkit-appearance: none;
+	background-color: transparent;
+	border: none;
+	align-items: left;
+	justify-content: left;
+	width: 1.5rem;
+	height: 1.5rem;
+	cursor: pointer;
+	margin: 0;
+	position: relative;
+  }
+  
+  .number-input button:before,
+  .number-input button:after {
+	display: inline-block;
+	position: absolute;
+	content: '';
+	width: 0.8rem;
+	height: 2px;
+	background-color: #999393;
+	transform: translate(-50%, -50%);
+  }
+  .number-input button.plus:after {
+	transform: translate(-50%, -50%) rotate(90deg);
+  }
+  
+  .number-input input[type=number] {
+	font-family: "Comic Sans MS,arial,verdana";
+	max-width: 1.5rem;
+	padding: 0.1em;
+	border: solid rgb(179, 176, 176);
+	border-width: 0 2px;
+	font-size: 1rem;
+	height: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+  }
+</style>
