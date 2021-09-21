@@ -101,18 +101,18 @@
                             </div>
                         </div>
                         <!-- Botones - Confirmar y limpiar -->
-                        <div>
-                            <div class="col-md-12 form-group text-center">
-                                <div>
-                                    <label class="col-md-4 control-label mb-3 form-label">
-                                        <h3>Registro</h3>
-                                    </label>
-                                </div>
-                                <div>
+                        <div class="col-md-12 form-group text-center">
+                            <div>
+                                <label class="col-md-4 control-label mb-3 form-label">
+                                    <h3>Registro</h3>
+                                </label>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <div class="col-2">
                                     <button type="submit" id="signUp" name="submit"
                                         class="btn btn-dark">Confirmar</button>
-                                    <button type="reset" name="reset" class="btn btn-secondary">Limpiar</button>
                                 </div>
+                                <div class="col-2"><button type="reset" name="reset" class="btn btn-secondary">Limpiar</button></div>
                             </div>
                         </div>
                     </div>
