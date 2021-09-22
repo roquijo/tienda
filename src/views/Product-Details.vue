@@ -37,10 +37,24 @@
         </div>
 
         <div class="control2">
-            <span>Cant: </span>
-            <input type="range" id="vol" name="vol" min="0" max="100" step="0.5" value="1" onchange=
-            "document.getElementById('outvol'),value=value" list=tickmarks>
-            <output id="outvol" name="outvol" for="vol">1</output>
+            <v-slider
+            v-model="slider"
+            class="align-center"
+            :max="max"
+            :min="min"
+            hide-details
+          >
+            <template v-slot:append>
+              <v-text-field
+                v-model="slider"
+                class="mt-0 pt-0"
+                hide-details
+                single-line
+                type="number"
+                style="width: 60px"
+              ></v-text-field>
+            </template>
+          </v-slider>
         </div>
       </div>
 
@@ -72,15 +86,6 @@
     </div>
   </html>
 </template>
-
-
-
-
-
-
-
-
-
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Abel|Aguafina+Script|Artifika|Athiti|Condiment|Dosis|Droid+Serif|Farsan|Gurajada|Josefin+Sans|Lato|Lora|Merriweather|Noto+Serif|Open+Sans+Condensed:300|Playfair+Display|Rasa|Sahitya|Share+Tech|Text+Me+One|Titillium+Web");
@@ -363,3 +368,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 </style>
 
+<script>
+export default {
+  data () {
+      return {
+        min: -50,
+        max: 90,
+        slider: 40,
+      }
+    },
+}
+</script>

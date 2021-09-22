@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <div>
         <div id="msg"></div>
 
         <!-- Mensajes de Verificación -->
@@ -119,7 +119,7 @@
                 </div>
             </fieldset>
         </form>
-    </main>
+    </div>
 </template>
 
 <script>
