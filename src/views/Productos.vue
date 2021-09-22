@@ -1,5 +1,5 @@
 <template>
-<body>
+<v-container>
 <div class="container">
     <h3 class="h3">Productos </h3>
     <div class="row">
@@ -7,7 +7,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/Pc-Gamer.png#">
+                        <img class="pic-1" src="../Images/Pc-Gamer.png">
                     </a>
                     <ul class="social">
                         <li><a href="" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -37,7 +37,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/camiseta.png#">
+                        <img class="pic-1" src="../Images/camiseta.png">
                     </a>
                     <ul class="social">
                         <li><a href="" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -67,7 +67,7 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/zapatos.png#">
+                        <img class="pic-1" src="../Images/zapatos.png">
                     </a>
                     <ul class="social">
                         <li><a href="" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
@@ -97,10 +97,10 @@
             <div class="product-grid">
                 <div class="product-image">
                     <a href="#">
-                        <img class="pic-1" src="../Images/silla-gamer.png#">
+                        <img class="pic-1" src="../Images/silla-gamer.png">
                     </a>
                     <ul class="social">
-                        <li><a href="product-details.html" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
+                        <li><a href="/detalles" data-tip="Especificaciones"><i class="fa fa-search"></i></a></li>
                         <li><a href="" data-tip="Añadir a la lista de deseos"><i class="fa fa-shopping-bag"></i></a></li>
                         <li><a href="" data-tip="Añadir al carrito"><i class="fa fa-shopping-cart"></i></a></li>
                     </ul>
@@ -125,8 +125,18 @@
         </div>
     </div>
 </div>
-<hr>
-</body>
+    <v-btn
+        id ="addButton"
+        color="primary"
+        dark
+        absolute
+        right
+        fab
+        to="/user/new"
+        >
+        <v-icon>mdi-plus</v-icon>
+        </v-btn> 
+</v-container>
 </template>
 
 <script>
