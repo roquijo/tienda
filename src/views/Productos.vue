@@ -1,5 +1,5 @@
 <template>
-<body>
+<v-container>
 <div class="container">
     <h3 class="h3">Productos </h3>
     <div class="row">
@@ -125,8 +125,18 @@
         </div>
     </div>
 </div>
-<hr>
-</body>
+    <v-btn
+        id ="addButton"
+        color="primary"
+        dark
+        absolute
+        right
+        fab
+        to="/user/new"
+        >
+        <v-icon>mdi-plus</v-icon>
+        </v-btn> 
+</v-container>
 </template>
 
 <script>

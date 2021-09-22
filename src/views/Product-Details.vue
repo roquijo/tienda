@@ -1,5 +1,5 @@
 <template>
-  <html>
+  <v-app>
     <div id="container">
       <div class="product-details">
         <font size="6" face="Comic Sans MS,arial,verdana"><b>G2 Silla</b></font>
@@ -37,25 +37,16 @@
         </div>
 
         <div class="control2">
-            <v-slider
-            v-model="slider"
-            class="align-center"
-            :max="max"
-            :min="min"
-            hide-details
-          >
-            <template v-slot:append>
-              <v-text-field
-                v-model="slider"
-                class="mt-0 pt-0"
-                hide-details
-                single-line
-                type="number"
-                style="width: 60px"
-              ></v-text-field>
-            </template>
-          </v-slider>
-        </div>
+        <h5>Cantidad: </h5>
+        <span class="number-input">
+          <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+          <input class="quantity" min="1" max="99" name="quantity" value="1" type="number">
+          <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+        </span>
+		</div>
+
+
+        
       </div>
 
       <!-- 	End	Product details   -->
@@ -84,7 +75,7 @@
       </div>
       <!--  End product image  -->
     </div>
-  </html>
+  </v-app>
 </template>
 
 <style>
@@ -171,17 +162,23 @@ body {
 
 .control {
   position: absolute;
-  bottom: 30%;
+  bottom: 32%;
   left: 6%;
-  display: inline-flex;
+
+}
+
+
+.control2 h5{
+  display: inline;
+  bottom: 10%;
 }
 
 .control2 {
   position: absolute;
-  bottom: 11%;
+  bottom: 22%;
   left: 10%;
-  display: inline-flex;
 }
+
 /* the Button */
 .buy {
   background: rgba(45, 156, 48);
@@ -370,12 +367,21 @@ input[type="number"]::-webkit-outer-spin-button {
 
 <script>
 export default {
+  
   data () {
       return {
-        min: -50,
-        max: 90,
-        slider: 40,
+        min: 0,
+        max: 100,
+        slider: 100,
       }
     },
+    methods:{
+      aumentarCantidad(){
+        var e,t=parseInt(document.getElementById("cantidadProductosSlider").value);
+        e = t;
+        var cantidad = document.getElementById("cantidadProductos");
+        cantidad.value = e;
+        }
+    }
 }
 </script>
