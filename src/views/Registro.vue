@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main class="app">
         <div id="msg"></div>
 
         <!-- Mensajes de Verificación -->
@@ -109,7 +109,7 @@
                                     </label>
                                 </div>
                                 <div>
-                                    <button type="submit" id="signUp" name="submit"
+                                    <button id="signUp" name="submit"
                                         class="btn btn-dark">Confirmar</button>
                                     <button type="reset" name="reset" class="btn btn-secondary">Limpiar</button>
                                 </div>
@@ -124,6 +124,8 @@
 
 <script>
 export default {
+    data: () => ({
+    }),
     methods:{
         function () {
             "use strict";
@@ -151,8 +153,8 @@ export default {
         verificarPasswords() {
 
     // Ontenemos los valores de los campos de contraseñas 
-    var password = document.getElementById('password');
-    var passwordConf = document.getElementById('passwordConf');
+    let password = document.getElementById('password');
+    let passwordConf = document.getElementById('passwordConf');
 
     // Verificamos si las constraseñas no coinciden
 
