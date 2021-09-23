@@ -37,16 +37,25 @@
         </div>
 
         <div class="control2">
-        <h5>Cantidad: </h5>
-        <span class="number-input">
-          <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
-          <input class="quantity" min="1" max="99" name="quantity" value="1" type="number">
-          <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-        </span>
-		</div>
-
-
-        
+          <h5>Cantidad:</h5>
+          <span class="number-input">
+            <button
+              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+            ></button>
+            <input
+              class="quantity"
+              min="1"
+              max="99"
+              name="quantity"
+              value="1"
+              type="number"
+            />
+            <button
+              onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+              class="plus"
+            ></button>
+          </span>
+        </div>
       </div>
 
       <!-- 	End	Product details   -->
@@ -164,11 +173,9 @@ body {
   position: absolute;
   bottom: 32%;
   left: 6%;
-
 }
 
-
-.control2 h5{
+.control2 h5 {
   display: inline;
   bottom: 10%;
 }
@@ -367,21 +374,21 @@ input[type="number"]::-webkit-outer-spin-button {
 
 <script>
 export default {
-  
-  data () {
-      return {
-        min: 0,
-        max: 100,
-        slider: 100,
-      }
+  data() {
+    return {
+      min: 0,
+      max: 100,
+      slider: 100,
+    };
+  },
+  methods: {
+    aumentarCantidad() {
+      var e,
+        t = parseInt(document.getElementById("cantidadProductosSlider").value);
+      e = t;
+      var cantidad = document.getElementById("cantidadProductos");
+      cantidad.value = e;
     },
-    methods:{
-      aumentarCantidad(){
-        var e,t=parseInt(document.getElementById("cantidadProductosSlider").value);
-        e = t;
-        var cantidad = document.getElementById("cantidadProductos");
-        cantidad.value = e;
-        }
-    }
-}
+  },
+};
 </script>
