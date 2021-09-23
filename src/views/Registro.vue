@@ -16,7 +16,7 @@
 
         <form class="form-horizontal needs-validation" onsubmit="verificarPasswords(); return false" action="#"
             method="post">
-            <fieldset>
+            <v-fieldset>
                 <!-- Contenedor -->
                 <div class="container mt-4">
                     <!-- Filas -->
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+            </v-fieldset>
         </form>
     </div>
 </template>
