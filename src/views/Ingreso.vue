@@ -11,7 +11,6 @@
             required
           ></v-text-field>
         </v-col>
-
         <v-col cols="12" md="4">
           <v-text-field
             v-model="lastname"
@@ -21,7 +20,6 @@
             required
           ></v-text-field>
         </v-col>
-
         <v-col cols="12" md="4">
           <v-text-field
             v-model="email"
@@ -29,6 +27,15 @@
             label="E-mail"
             required
           ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6" md="3">
+          <v-select
+            v-model="select"
+            :items="items"
+            :rules="[(v) => !!v || 'Item is required']"
+            label="Item"
+            required
+          ></v-select>
         </v-col>
       </v-row>
     </v-container>
@@ -77,6 +84,15 @@
   </div> -->
 </template>
 
-<script></script>
+<script>
+export default {
+  data: () => ({
+    select: null,
+    items: ["Administador","Cliente"],
+    checkbox: false,
+  }),
+};
+
+</script>
 
 <style></style>
