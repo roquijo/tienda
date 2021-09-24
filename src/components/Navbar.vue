@@ -17,7 +17,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="true" href="/login"
+            <a class="nav-link active" aria-current="true" href="/ingreso"
               >Ingresar</a
             >
           </li>
