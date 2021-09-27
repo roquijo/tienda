@@ -72,7 +72,7 @@
 
         <!-- 	product Information-->
         <div class="info"><p>
-          <h2>DESCRIPCION SERIA</h2>
+          <h2>DESCRIPCION</h2>
           <ul>
             <li ><strong>Tamaño: </strong>XL</li>
             <li><strong>Color: </strong>Negro</li>
