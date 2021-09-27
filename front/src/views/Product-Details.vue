@@ -38,6 +38,7 @@
         </div>
 
         <div class="control2">
+<<<<<<< HEAD:front/src/views/Product-Details.vue
           <v-subheader>Cantidad:</v-subheader>
           <v-slider
             v-model="slider"
@@ -57,6 +58,26 @@
               ></v-text-field>
             </template>
           </v-slider>
+=======
+          <h5>Cantidad:</h5>
+          <span class="number-input">
+            <button
+              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+            ></button>
+            <input
+              class="quantity"
+              min="1"
+              max="99"
+              name="quantity"
+              value="1"
+              type="number"
+            />
+            <button
+              onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+              class="plus"
+            ></button>
+          </span>
+>>>>>>> 1b3252581446ff71215b015833e95f7a2fb1f51d:src/views/Product-Details.vue
         </div>
       </div>
 
@@ -175,6 +196,14 @@ body {
   position: absolute;
   bottom: 25%;
   left: 6%;
+<<<<<<< HEAD:front/src/views/Product-Details.vue
+=======
+}
+
+.control2 h5 {
+  display: inline;
+  bottom: 10%;
+>>>>>>> 1b3252581446ff71215b015833e95f7a2fb1f51d:src/views/Product-Details.vue
 }
 
 .control2 {

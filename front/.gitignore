@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 .DS_Store
 node_modules
+=======
+node_modules
+<<<<<<<< HEAD:front/.gitignore
+>>>>>>> 1b3252581446ff71215b015833e95f7a2fb1f51d
 /dist
 
 
@@ -21,3 +26,8 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
+=======
+========
+>>>>>>>> 1b3252581446ff71215b015833e95f7a2fb1f51d:.gitignore
+>>>>>>> 1b3252581446ff71215b015833e95f7a2fb1f51d
