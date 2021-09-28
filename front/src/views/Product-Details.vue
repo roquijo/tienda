@@ -10,6 +10,7 @@
           <i class="fa fa-star" aria-hidden="true"></i>
           <i class="fa fa-star-half-o" aria-hidden="true"></i>
           <i class="fa fa-star-o" aria-hidden="true"></i>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
         </span>
 
         <br /><br />
@@ -27,7 +28,7 @@
           <!-- Start Button buying -->
           <button class="btn">
             <!-- 		the Price -->
-            <span class="price">Por solo 999 dolarucos</span>
+            <span class="price">$1.000.000.000.000</span>
             <!-- 		shopping cart icon-->
 
             <!-- 		Buy Now / ADD to Cart-->
@@ -37,6 +38,7 @@
         </div>
 
         <div class="control2">
+<<<<<<< HEAD:front/src/views/Product-Details.vue
           <h5>Cantidad:</h5>
           <span class="number-input">
             <button
@@ -55,6 +57,27 @@
               class="plus"
             ></button>
           </span>
+=======
+          <v-subheader>Cantidad:</v-subheader>
+          <v-slider
+            v-model="slider"
+            class="align-center"
+            :max="max"
+            :min="min"
+            hide-details
+          >
+            <template v-slot:append>
+              <v-text-field
+                v-model="slider"
+                class="mt-0 pt-0"
+                hide-details
+                single-line
+                type="number"
+                style="width: 60px"
+              ></v-text-field>
+            </template>
+          </v-slider>
+>>>>>>> f81b43aa2efbb9a6de22148cb89f9669ab8d9298:src/views/Product-Details.vue
         </div>
       </div>
 
@@ -69,10 +92,10 @@
         />
 
         <!-- 	product Information-->
-        <div class="info">
-          <h2>DESCRIPCION SERIA</h2>
+        <div class="info"><p>
+          <h2>DESCRIPCION</h2>
           <ul>
-            <li><strong>Tamaño: </strong>XL</li>
+            <li ><strong>Tamaño: </strong>XL</li>
             <li><strong>Color: </strong>Negro</li>
             <li><strong>Marca: </strong>G2</li>
             <li><strong>Cuidados: </strong>No mojar</li>
@@ -171,19 +194,23 @@ body {
 
 .control {
   position: absolute;
-  bottom: 32%;
+  bottom: 25%;
   left: 6%;
+<<<<<<< HEAD:front/src/views/Product-Details.vue
 }
 
 .control2 h5 {
   display: inline;
   bottom: 10%;
+=======
+>>>>>>> f81b43aa2efbb9a6de22148cb89f9669ab8d9298:src/views/Product-Details.vue
 }
 
 .control2 {
   position: absolute;
-  bottom: 22%;
+  bottom: 10%;
   left: 10%;
+  width: 275px;
 }
 
 /* the Button */
@@ -281,10 +308,9 @@ body {
   line-height: 2;
   text-align: left;
   font-size: 140%;
-  cursor: no-drop;
   color: #fff;
-  height: 110%;
-  width: 110%;
+  height: 100%;
+  width: 100%;
   left: 100;
   top: 0;
 }
@@ -389,6 +415,19 @@ export default {
       var cantidad = document.getElementById("cantidadProductos");
       cantidad.value = e;
     },
+  },
+};
+</script>
+
+
+
+<script>
+export default {
+  data() {
+    return {
+      min: 1,
+      max: 100,
+    };
   },
 };
 </script>

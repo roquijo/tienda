@@ -1,5 +1,11 @@
 <template>
-  <v-form method="post" action="/Ingreso" ref="form" v-model="valid" lazy-validation>
+  <v-form
+    method="post"
+    action="/Ingreso"
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
     <v-container>
       <v-card elevation="15">
         <v-row class="mt-4 mx-auto">
@@ -81,7 +87,9 @@
               filled
             ></v-text-field>
             <div class="text-right">
-              <v-card-text class="mb-0">Ya tiene cuenta? <a href="/Ingreso">Ingrese</a>.</v-card-text>
+              <v-card-text class="mb-0"
+                >Ya tiene cuenta? <a href="/Ingreso">Ingrese</a>.</v-card-text
+              >
             </div>
           </v-col>
         </v-row>
