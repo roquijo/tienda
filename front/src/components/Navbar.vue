@@ -1,36 +1,48 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/productos">Mercado</a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent" role="navigation">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#"
-                                    onclick="alert('Proyecto Desarollado Por Jorge Rojas, Gustavo Ramirez, Julian Garzon, Javier Quintero, Diego vega')">Acerca
-                                    de</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="true" href="/login">Ingresar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="true" href="/registro">Registrarse</a>
-                            </li>
-                        </ul>
-                        <form class="d-flex" style="margin-top:13px;">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Buscar">
-                            <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/productos">Mercado</a>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
+        role="navigation"
+      >
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              href="#"
+              onclick="alert('Proyecto Desarollado Por Jorge Rojas, Gustavo Ramirez, Julian Garzon, Javier Quintero, Diego vega')"
+              >Acerca de</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="true" href="/ingreso"
+              >Ingresar</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="true" href="/registro"
+              >Registrarse</a
+            >
+          </li>
+        </ul>
+        <form class="d-flex" style="margin-top:13px;">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Buscar"
+          />
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -1,5 +1,11 @@
 <template>
-  <v-form method="post" action="/Perfil" ref="loginForm" v-model="valid" lazy-validation>
+  <v-form
+    method="post"
+    action="/Perfil"
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
     <v-container>
       <v-card elevation="15" width="75%" class="mx-auto">
         <v-row class="mt-4 mx-auto" align="center" align-content="center">
@@ -36,16 +42,18 @@
               required
               filled
             ></v-select>
-            <p class="mb-0">No tiene cuenta? <a href="/registro">Registrese</a>.</p>
+            <p class="mb-0">
+              No tiene cuenta? <a href="/registro">Registrese</a>.
+            </p>
           </v-col>
           <v-col cols="6" sm="6" md="6">
             <v-img src="../Images/cuenta.png"></v-img>
           </v-col>
           <v-col align-self="center" cols="12" sm="12" md="10">
             <v-btn
+              :disabled="!valid"
               class="mr-4"
               type="submit"
-              :disabled="!valid"
               color="primary"
               @click="validate"
             >
@@ -64,18 +72,17 @@
 <script>
 export default {
   data: () => ({
-    select: null,
-    items: ["Administador", "Cliente"],
-    checkbox: false,
-
     valid: true,
 
+    select: null,
+    items: ["Administador", "Cliente"],
+    
     email: "",
     emailRules: [
       (v) => !!v || "E-mail es requerido",
       (v) => /.+@.+\..+/.test(v) || "E-mail debe ser válido",
     ],
-    
+
     show: false,
     password: "",
     rules: {
@@ -83,17 +90,17 @@ export default {
       min: (v) => v.length >= 8 || "Mínimo 8 caracteres",
     },
   }),
-  
+
   methods: {
     validate() {
       this.$refs.form.validate();
     },
-    clear () {
-        this.email = ''
-        this.select = null
-        this.checkbox = null
-        this.$refs.loginForm.reset();
-      },
+    clear() {
+      this.email = "";
+      this.select = null;
+      this.checkbox = null;
+      this.$refs.loginForm.reset();
+    },
   },
 };
 </script>
