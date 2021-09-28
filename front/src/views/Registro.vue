@@ -10,7 +10,7 @@
       <v-card elevation="15">
         <v-row class="mt-4 mx-auto">
           <legend class="mb-3 mt-5">
-            <h2>Registro Nuevo Usuario dos</h2>
+            <h2>Registro Nuevo Usuario</h2>
           </legend>
           <v-col cols="12" sm="6" md="6">
             <v-text-field
