@@ -30,6 +30,9 @@
                                 <a class="nav-link active" aria-current="true" href="/login">Ingresar</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link active" aria-current="true" href="/perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link active" aria-current="true" href="/registro">Registrarse</a>
                             </li>
                         </ul>
