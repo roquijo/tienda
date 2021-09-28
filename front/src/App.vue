@@ -4,7 +4,7 @@
     <v-main>
       <router-view/>
     </v-main>
-    <v-footer class="grey lighten-1" app>
+    <v-footer color="grey lighten-1" padless>
       <Footer></Footer>
     </v-footer>
   </v-app>
