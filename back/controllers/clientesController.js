@@ -1,6 +1,7 @@
 const clienteModel = require("../models/clientes");
 
 module.exports = class clientesController {
+    
     static async getAll(req, res) {
         try {
             const clientes = await clienteModel.find();

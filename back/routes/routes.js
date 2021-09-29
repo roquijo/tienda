@@ -3,7 +3,7 @@ const clientesController = require("../controllers/clientescontroller");
 
 const router = express.Router();
 
-// Rutas de productos 
+// Rutas de clientes 
 router.get("/clientes", clientesController.getAll);
 router.get("/clientes/:id", clientesController.getById);
 router.post("/clientes/", clientesController.insert);
