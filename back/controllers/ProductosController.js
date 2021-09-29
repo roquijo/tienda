@@ -1,11 +1,11 @@
-const clienteModel = require("../models/clientes");
+const productoModel = require("../models/Productos");
 
-module.exports = class clientesController {
+module.exports = class ProductosController {
     
     static async getAll(req, res) {
         try {
-            const clientes = await clienteModel.find();
-            res.status(200).json(clientes);
+            const productos = await productoModel.find();
+            res.status(200).json(productos);
         } catch (err) {
             res.status(404).json({ mensaje: err.mensaje });
         }
@@ -14,9 +14,9 @@ module.exports = class clientesController {
     static async getById(req, res) {
         const id = req.params.id;
         try {
-            const cliente = await clienteModel.findOne({"code":id});
-            if (cliente != null) {
-                res.status(200).json(cliente);
+            const productos = await productoModel.findOne({"id":id});
+            if (productos != null) {
+                res.status(200).json(productos);
             } else {
                 res.status(404).json();
             }
@@ -28,9 +28,9 @@ module.exports = class clientesController {
 
     static async insert(req, res) {
         try {
-            const cliente = req.body;
-            const nuevocliente = await clienteModel.create(cliente);
-            res.status(201).json(nuevocliente);
+            const producto = req.body;
+            const nuevoProducto = await productoModel.create(producto);
+            res.status(201).json(nuevoProducto);
         } catch (err) {
             res.status(400).json({ mensaje: err.mensaje });
         }
@@ -39,9 +39,9 @@ module.exports = class clientesController {
     static async update(req, res) {
         try {
             const id = req.params.id;
-            const cliente = req.body;
-            const actualizarcliente = await clienteModel.updateOne({"code":id},cliente);
-            res.status(200).json(actualizarcliente);
+            const producto = req.body;
+            const actualizarproductos = await productoModel.updateOne({"id":id},producto);
+            res.status(200).json(actualizarproductos);
         } catch (err) {
             res.status(400).json({ mensaje: err.mensaje });
         }
@@ -50,7 +50,7 @@ module.exports = class clientesController {
     static async delete(req, res) {
         try {
             const id = req.params.id;
-            await clienteModel.deleteOne({"code":id});
+            await productoModel.deleteOne({"id":id});
             res.status(200).json();
         } catch (err) {
             res.status(400).json({ mensaje: err.mensaje });
