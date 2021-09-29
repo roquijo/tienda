@@ -132,7 +132,7 @@
         absolute
         right
         fab
-        to="/user/new"
+        to="/productonuevo"
         >
         <v-icon>mdi-plus</v-icon>
         </v-btn> 

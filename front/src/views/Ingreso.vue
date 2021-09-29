@@ -2,13 +2,13 @@
   <v-form
     method="post"
     action="/Perfil"
-    ref="form"
+    ref="loginForm"
     v-model="valid"
     lazy-validation
   >
     <v-container>
       <v-card elevation="15" width="75%" class="mx-auto">
-        <v-row class="mt-4 mx-auto" align="center" align-content="center">
+        <v-row class="mt-4 ma-auto" align="center" align-content="center">
           <v-col cols="12" sm="6" md="6">
             <legend class="mb-3 mt-5">
               <h2>Ingreso:</h2>
@@ -37,7 +37,7 @@
             <v-select
               v-model="select"
               :items="items"
-              :rules="[(v) => !!v || 'Item is required']"
+              :rules="[(v) => !!v || 'Este campo es requerido']"
               label="Ingresar como:"
               required
               filled
@@ -93,7 +93,7 @@ export default {
 
   methods: {
     validate() {
-      this.$refs.form.validate();
+      this.$refs.loginForm.validate();
     },
     clear() {
       this.email = "";

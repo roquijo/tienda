@@ -1,15 +1,20 @@
 <template>
-  <hello-world />
+  <v-container>
+    <v-card color="#ccc" class="text-center mx-auto">
+      <h1>Bienvenidos!</h1>
+      <v-img height="435" src="../Images/cyber-monday-retail-sales.jpg"></v-img>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+export default {
+  name: "Home",
 
-  export default {
-    name: 'Home',
-
-    components: {
-      HelloWorld,
-    },
-  }
+  components: {},
+};
 </script>
+
+<style scoped>
+
+</style>
