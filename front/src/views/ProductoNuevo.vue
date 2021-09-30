@@ -6,11 +6,26 @@
           <v-form role="form" class="mx-auto">
             <div class="form-group">
               <label for="name">Nombre del producto: </label>
-              <input type="text" class="form-control" id="name_product" />
-              <label for="info">Informacion: </label>
-              <input type="text" class="form-control" id="information" />
+              <input
+                v-model="nombre"
+                type="text"
+                class="form-control"
+                id="nombre del producto"
+              />
+              <label for="info">Codigo: </label>
+              <input
+                v-model="id"
+                type="text"
+                class="form-control"
+                id="information"
+              />
               <label for="precio">Precio: </label>
-              <input type="text" class="form-control" id="price" />
+              <input
+                v-model="precio"
+                type="text"
+                class="form-control"
+                id="precio"
+              />
               <label for="tamaño">Tamaño: </label>
               <input type="text" class="form-control" id="size" />
               <label for="color">Color: </label>
@@ -37,8 +52,16 @@
               <span class="desc">Pulse aquí para añadir archivos</span>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary mr-5">Enviar</button>
-              <button type="reset" class="btn btn-secondary ml-5">Cancelar</button>
+              <button
+                type="submit"
+                class="btn btn-primary mr-5"
+                @click="guardar()"
+              >
+                Enviar
+              </button>
+              <button type="reset" class="btn btn-secondary ml-5">
+                Cancelar
+              </button>
             </div>
           </v-form>
         </v-col>
@@ -47,8 +70,7 @@
   </v-container>
 </template>
 
-<style >
-
+<style>
 /* Estilo del área del input[file] */
 .drag-drop {
   height: 8em;
@@ -167,5 +189,30 @@ input[type="file"]:hover {
 </style>
 
 <script>
-export default {};
+import { insertProducto } from "../../src/services/Productos.Service";
+export default {
+  data() {
+    return {
+      id: 0,
+      nombre: "",
+      precio: 0,
+    };
+  },
+  methods: {
+    guardar() {
+      const producto = {
+        id: this.id,
+        nombre: this.nombre,
+        precio: this.precio,
+        especificacion: "",
+        foto: "",
+      };
+      insertProducto(producto)
+        .then((response) => {
+          console.log("Se ha agreado el producto", response.data._id);
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+};
 </script>
