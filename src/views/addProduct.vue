@@ -52,10 +52,10 @@
 
 <style>
 form {
-width: 25em;
+width: 30em;
 padding: 1em;
-border: 1px solid #ccc;
-border-radius: .5em;
+border: 2px solid #ccc;
+border-radius: 1em;
 margin: 1em;
 box-shadow: .25em .25em 0 #ccc;
 }
