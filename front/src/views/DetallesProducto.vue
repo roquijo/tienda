@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <div id="container">
-      <div class="product-details" v-for="producto in productos" :key="producto.id">
-        <font size="6" face="Comic Sans MS,arial,verdana"><b>{{ producto.nombre }}</b></font>
+      <div class="product-details" >
+        <font size="6" face="Comic Sans MS,arial,verdana"><strong>{{ producto.nombre }}</strong></font>
 
         <span class="hint-star star">
           <i class="fa fa-star" aria-hidden="true"></i>
@@ -373,7 +373,7 @@ export default {
       min: 0,
       max: 100,
       slider: 100,
-      productos: [],
+      producto: {},
     };
   },
   methods: {
@@ -389,7 +389,7 @@ export default {
     const id = 1;
     getProductByID(id)
       .then((response) => {
-        this.productos = response;
+        this.producto = response;
       })
       .catch((error) => console.error(error));
   },
