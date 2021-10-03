@@ -25,33 +25,22 @@
                 type="text"
                 class="form-control"
                 id="precio"
-              />
-              <label for="tamaño">Tamaño: </label>
-              <input type="text" class="form-control" id="size" />
-              <label for="color">Color: </label>
-              <input type="text" class="form-control" id="colour" />
-              <label for="marca">Marca: </label>
-              <input type="text" class="form-control" id="mark" />
-              <label for="cuidados">Cuidados: </label>
-              <input type="text" class="form-control" id="cares" />
-              <label for="vendedor">Vendedor: </label>
-              <input type="text" class="form-control" id="vendor" />
-              <label for="detalles">Detalles: </label>
-              <input type="text" class="form-control" id="details" />
-              <label for="garantia">Garantia: </label>
-              <input type="text" class="form-control" id="garanty" />
-            </div>
-            <label for="photo">Incluya una foto</label>
-            <div class="drag-drop">
-              <input type="file" multiple="multiple" id="photo" />
-              <span class="fa-stack fa-2x">
-                <i class="fa fa-cloud fa-stack-2x bottom pulsating"></i>
-                <i class="fa fa-circle fa-stack-1x top medium"></i>
-                <i class="fa fa-arrow-circle-up fa-stack-1x top"></i>
-              </span>
-              <span class="desc">Pulse aquí para añadir archivos</span>
-            </div>
-            <div class="text-center">
+              />   
+              <label for="foto">Foto: </label>
+              <input
+                v-model="foto"
+                type="text"
+                class="form-control"
+                id="foto"
+              />   
+              <label for="especificacion">Especificacion: </label>
+              <v-text-field
+                v-model="especificacion"
+                type="text"               
+                id="especificacion"
+              ></v-text-field>           
+            </div>            
+            <div class="text-center mt-4">
               <button
                 type="submit"
                 class="btn btn-primary mr-5"
@@ -196,6 +185,8 @@ export default {
       id: 0,
       nombre: "",
       precio: 0,
+      foto: "",
+      especificacion: "",
     };
   },
   methods: {
@@ -204,8 +195,8 @@ export default {
         id: this.id,
         nombre: this.nombre,
         precio: this.precio,
-        especificacion: "",
-        foto: "",
+        foto: this.foto,
+        especificacion: this.especificacion,        
       };
       insertProducto(producto)
         .then((response) => {

@@ -14,9 +14,9 @@ module.exports = class ProductosController {
     static async getById(req, res) {
         const id = req.params.id;
         try {
-            const productos = await productoModel.findOne({"id":id});
-            if (productos != null) {
-                res.status(200).json(productos);
+            const producto = await productoModel.findOne({"id":id});
+            if (producto != null) {
+                res.status(200).json(producto);
             } else {
                 res.status(404).json();
             }

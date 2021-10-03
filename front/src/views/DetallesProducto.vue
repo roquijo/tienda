@@ -2,7 +2,7 @@
   <v-app>
     <div id="container">
       <div class="product-details">
-        <font size="6" face="Comic Sans MS,arial,verdana"><b>G2 Silla</b></font>
+        <font size="6" face="Comic Sans MS,arial,verdana"><b>{{ producto.nombre }}</b></font>
 
         <span class="hint-star star">
           <i class="fa fa-star" aria-hidden="true"></i>
@@ -16,11 +16,7 @@
         <br /><br />
         <!-- The most important information about the product -->
         <i class="information"
-          >"La poderosisima Silla de G2, los mejores se han sentado en esta
-          silla Como MixWell, Koldamente, Nukye, grandes jugadores profesionales
-          de G2. Firmada por el mismiso Lucas Rojo. Con esta silla no tendras
-          mas excusas asi que pasaras de ser un completo fracaso en los E-Sport
-          a ser la estrella del Torneo."
+          >{{ producto.descripcion }}
         </i>
 
         <!-- 		Control -->
@@ -28,7 +24,7 @@
           <!-- Start Button buying -->
           <button class="btn">
             <!-- 		the Price -->
-            <span class="price">$1.000.000.000.000</span>
+            <span class="price">{{ producto.precio }}</span>
             <!-- 		shopping cart icon-->
 
             <!-- 		Buy Now / ADD to Cart-->
@@ -66,8 +62,7 @@
 
       <div class="product-image">
         <img
-          src="https://cdn.shopify.com/s/files/1/0548/8554/8183/products/G2SL2021Chair-Front_900x.jpg?v=1628169262"
-          alt="Omar Dsoky"
+          :src="producto.foto"
         />
 
         <!-- 	product Information-->
@@ -370,12 +365,22 @@ input[type="number"]::-webkit-outer-spin-button {
 </style>
 
 <script>
+import { getProductByID } from "../services/Productos.Service";
+
 export default {
   data() {
     return {
       min: 0,
       max: 100,
       slider: 100,
+      productos: [],
+      producto: {
+        id: this.id,
+        nombre: this.nombre,
+        precio: this.precio,
+        foto: this.foto,
+        especificacion: this.especificacion,
+      },
     };
   },
   methods: {
@@ -387,18 +392,13 @@ export default {
       cantidad.value = e;
     },
   },
-};
-</script>
-
-
-
-<script>
-export default {
-  data() {
-    return {
-      min: 1,
-      max: 100,
-    };
+  mounted() {   
+    const id = 1;
+    getProductByID(id)
+      .then((response) => {
+        this.producto = response;
+      })
+      .catch((error) => console.error(error));
   },
 };
 </script>

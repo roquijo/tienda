@@ -34,14 +34,14 @@
               @click:append="show = !show"
               filled
             ></v-text-field>
-            <v-select
+            <!-- <v-select
               v-model="select"
               :items="items"
               :rules="[(v) => !!v || 'Este campo es requerido']"
               label="Ingresar como:"
               required
               filled
-            ></v-select>
+            ></v-select> -->
             <p class="mb-0">
               No tiene cuenta? <a href="/registro">Registrese</a>.
             </p>
@@ -74,8 +74,8 @@ export default {
   data: () => ({
     valid: true,
 
-    select: null,
-    items: ["Administador", "Cliente"],
+    // select: null,
+    // items: ["Administador", "Cliente"],
     
     email: "",
     emailRules: [

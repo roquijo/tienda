@@ -1,55 +1,48 @@
 <template>
   <v-container>
-    <div class="container">
-      <h3 class="h3">Productos</h3>
-      <div class="row">
-        <div class="col-md-3 col-sm-6" v-for="producto in productos" :key="producto.id">
-          <div class="product-grid">
-            <div class="product-image">
-              <a href="#">
-                <img class="pic-1" src="../Images/no_image.jpg" alt="" />
-              </a>
-              <ul class="social">
-                <li>
-                  <a href="" data-tip="Especificaciones"
-                    ><i class="fa fa-search"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="" data-tip="Añadir a la lista de deseos"
-                    ><i class="fa fa-shopping-bag"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="" data-tip="Añadir al carrito"
-                    ><i class="fa fa-shopping-cart"></i
-                  ></a>
-                </li>
-              </ul>
-              <span class="product-new-label">Sale</span>
-              <span class="product-discount-label">20%</span>
-            </div>
-            <ul class="rating">
-              <li class="fa fa-star"></li>
-              <li class="fa fa-star"></li>
-              <li class="fa fa-star"></li>
-              <li class="fa fa-star"></li>
-              <li class="fa fa-star disable"></li>
+    <h1 class="h1">Productos</h1>
+    <v-row>
+      <v-col col-md-3 col-sm-6 v-for="producto in productos" :key="producto.id">
+        <div class="product-grid">
+          <div class="product-image">
+            <a href="#">
+              <img class="pic-1" :src="producto.foto" alt="" />
+            </a>
+            <ul class="social">
+              <li class="esp">
+                <a href="/detalles" data-tip="Especificaciones"
+                  ><em class="fa fa-search"></em
+                ></a>
+              </li>
+              <li class="add">
+                <a href="" data-tip="Añadir a la lista de deseos"
+                  ><em class="fa fa-shopping-bag"></em
+                ></a>
+              </li>
+              <li class="buy">
+                <a href="" data-tip="Añadir al carrito"
+                  ><em class="fa fa-shopping-cart"></em
+                ></a>
+              </li>
             </ul>
-            <div class="product-content">
-              <h3 class="title"><a href="#">{{producto.nombre}}</a></h3>
-              <div class="price">
-                {{producto.precio}}
-              </div>
-              <a class="add-to-cart" href="">+ añadir al carro</a>
-            </div>
-            <button>Editar</button>
-            <v-btn>Eliminar</v-btn>
-            <button></button>
+            <span class="product-new-label">Sale</span>
+            <span class="product-discount-label">20%</span>
+          </div>
+          <div class="product-content">
+            <h3 class="title">
+              <a href="#">{{ producto.nombre }}</a>
+            </h3>
+            <div class="price">${{ producto.precio }}</div>
+            <a class="add-to-cart" href="">+ Añadir al Carro</a>
+          </div>
+          <div class="my-2">
+            <v-btn class="mx-2">Editar</v-btn>
+            <v-btn class="mx-2">Eliminar</v-btn>
           </div>
         </div>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
+
     <v-btn
       id="addButton"
       color="primary"
@@ -66,17 +59,25 @@
 
 <script>
 import { getAllProductos } from "../services/Productos.Service";
-
 export default {
   data() {
     return {
       productos: [],
+      producto: {
+        id: this.id,
+        nombre: this.nombre,
+        precio: this.precio,
+        foto: this.foto,
+        especificacion: this.especificacion,
+      },
     };
   },
+  methods: {},
   mounted() {
     getAllProductos()
       .then((response) => {
         this.productos = response.data;
+        console.log(response.data)
       })
       .catch((error) => console.error(error));
   },
@@ -84,11 +85,10 @@ export default {
 </script>
 
 <style scoped>
-h3.h3 {
+h1.h1 {
   text-align: center;
   margin: 1em;
   text-transform: capitalize;
-  font-size: 1.7em;
 }
 
 /********************* shopping Demo-1 **********************/
@@ -100,7 +100,8 @@ img {
 .product-grid {
   font-family: Raleway, sans-serif;
   text-align: center;
-  padding: 0 0 72px;
+  margin: auto;
+  padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);
   overflow: hidden;
   position: relative;
@@ -173,6 +174,7 @@ img {
   font-size: 16px;
   line-height: 40px;
   text-align: center;
+  text-decoration: none;
   height: 40px;
   width: 40px;
   margin: 0 2px;
@@ -181,16 +183,26 @@ img {
   transition: all 0.3s ease-in-out;
 }
 
-.product-grid .social li a:hover {
+.product-grid .social li.esp a:hover {
   color: #fff;
-  background-color: #ef5777;
+  background-color: #068626;
+}
+
+.product-grid .social li.add a:hover {
+  color: #fff;
+  background-color: #c4a20b;
+}
+
+.product-grid .social li.buy a:hover {
+  color: #fff;
+  background-color: #cf2e11;
 }
 
 .product-grid .social li a:after,
 .product-grid .social li a:before {
   content: attr(data-tip);
   color: #fff;
-  background-color: #000;
+  background-color: rgb(0, 0, 0);
   font-size: 12px;
   letter-spacing: 1px;
   line-height: 20px;
@@ -204,7 +216,7 @@ img {
 }
 
 .product-grid .social li a:after {
-  content: "";
+  content: "Holaaaaa";
   height: 15px;
   width: 15px;
   border-radius: 0;
@@ -221,7 +233,7 @@ img {
 .product-grid .product-discount-label,
 .product-grid .product-new-label {
   color: #fff;
-  background-color: #ef5777;
+  background-color: #be3535;
   font-size: 12px;
   text-transform: uppercase;
   padding: 2px 7px;
@@ -252,7 +264,7 @@ img {
 }
 
 .product-grid .product-content {
-  background-color: #fff;
+  background-color: rgb(212, 212, 212);
   text-align: center;
   padding: 32px 0;
   margin: 0 auto;
@@ -283,7 +295,7 @@ img {
 
 .product-grid .title a:hover,
 .product-grid:hover .title a {
-  color: #ef5777;
+  color: #04942f;
 }
 
 .product-grid .price {
