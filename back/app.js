@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 // Agregar las rutas a escuchar
 app.use("/api", require("./routes/routes"));
 
+// 
+app.use(express.static("uploads"))
+
 // Iniciar el servidor
 const port = process.env.PORT;
 app.listen(port, () => console.log(`Servidor en http://localhost:${port}`));
