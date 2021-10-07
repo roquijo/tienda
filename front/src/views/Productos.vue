@@ -35,10 +35,10 @@
             <div class="price">${{ producto.precio }}</div>
             <a class="add-to-cart" href="">+ Añadir al Carro</a>
           </div>
-          <!-- <div class="my-2">
+          <div class="my-2">
             <v-btn color="success" class="mx-2">Editar</v-btn>
-            <v-btn color="secondary" class="mx-2">Eliminar</v-btn>
-          </div> -->
+            <v-btn color="secondary" class="mx-2" @click="eliminarProducto(producto.id)">Eliminar</v-btn>
+          </div>
         </div>
         <v-btn
           color="success"
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { getAllProductos } from "../services/Productos.Service";
+import { getAllProductos, deleteProducto } from "../services/Productos.Service";
 export default {
   data() {
     return {
@@ -70,7 +70,6 @@ export default {
       },
     };
   },
-  methods: {},
   mounted() {
     getAllProductos()
       .then((response) => {
@@ -79,13 +78,23 @@ export default {
       })
       .catch((error) => console.error(error));
   },
+  methods: {
+    eliminarProducto(id){
+      deleteProducto(id)
+      .then(()=>{
+        console.log("Exito");
+        this.productos = this.productos.filter((item)=> item.id != id)
+      })
+      .catch(()=>{console.log("Error")})
+    }
+  },
 };
 </script>
 
 <style scoped>
 h1.h1 {
   text-align: center;
-  margin: 1em;
+  margin-bottom: 50px;
   text-transform: capitalize;
 }
 

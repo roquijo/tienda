@@ -7,9 +7,9 @@
     <v-main>
       <v-container fluid>
         <!-- Aquí se muestran las vistas -->
-        <!-- <transition name="slide" mode="out-in"> -->
+        <transition name="slide" mode="out-in">
           <router-view />
-        <!-- </transition> -->
+        </transition>
       </v-container>
     </v-main>
     <!-- Aquí se añade el pie de página -->

@@ -1,16 +1,23 @@
 import httpClient from "./httpClient";
 
-const END_POINT_PRODUCTO =  "/api/productos";
+const END_POINT =  "/api/productos";
 
 
-const getAllProductos = () => httpClient.get(END_POINT_PRODUCTO); 
+const getAllProductos = () => httpClient.get(END_POINT); 
 
-const getProductByID = (id) => httpClient.get(END_POINT_PRODUCTO + "/" + id);
+const getProductByID = (id) => httpClient.get(END_POINT + "/" + id);
 
-const insertProducto = (producto) => httpClient.post(END_POINT_PRODUCTO, producto); 
+const insertProducto = (producto) => httpClient.post(END_POINT, producto); 
+
+const updateProducto = (id, producto) => httpClient.put(END_POINT + "/" + id, producto); 
+
+const deleteProducto = (id) => httpClient.delete(END_POINT + "/" + id);
+
 
 export{
     getAllProductos,
     insertProducto,
-    getProductByID
+    getProductByID,
+    updateProducto,
+    deleteProducto
 }

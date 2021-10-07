@@ -3,34 +3,34 @@
     <v-card elevation="15" width="50%" class="mx-auto">
       <v-row class="ma-auto">
         <v-col cols="12" sm="12" md="12">
-          <v-form class="mx-auto">
-            <ConfirMensaje
-              :mensaje="ConfirMensaje"
-              :snackbar="ConfirShow"
-            ></ConfirMensaje>
+          <v-form class="mx-auto" ref="form">
             <v-text-field
               v-model="nombre"
-              label="Producto nuevo"
+              label="Producto nuevo *"
               placeholder="Ingrese el nombre del producto"
               required
               filled
               dense
+              :rules="rules"
             ></v-text-field>
             <v-text-field
               v-model="id"
-              label="Código"
+              label="Código *"
               placeholder="Ingrese el código"
               filled
               dense
               required
+              :rules="rules"
             ></v-text-field>
             <v-text-field
               v-model="precio"
-              label="Precio"
+              label="Precio *"
               placeholder="Ingrese el precio"
               filled
               dense
               required
+              :rules="rules"
+              prefix="$"
             ></v-text-field>
             <v-file-input
               v-show="!show"
@@ -69,10 +69,20 @@
               <v-btn color="primary" class="mr-5" @click="guardar()">
                 Enviar
               </v-btn>
-              <v-btn type="reset" color="secondary" class="ml-5">
+              <v-btn  @click="reset" color="secondary" class="ml-5">
                 Cancelar
               </v-btn>
             </div>
+            <ConfirMensaje
+              :mensaje="ConfirMensaje"
+              :snackbar="ConfirShow"
+              :close="cerrarMensaje"
+            ></ConfirMensaje>
+            <MensajeError
+              :mensaje="MensajeError"
+              :snackbar="ErrorShow"
+              :close="cerrarError"
+            ></MensajeError>
           </v-form>
         </v-col>
       </v-row>
@@ -83,24 +93,38 @@
 <script>
 import { insertProducto } from "../../src/services/Productos.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
+import MensajeError from "../../src/components/MensajeError.vue";
+
 export default {
   components: {
     ConfirMensaje,
+    MensajeError
   },
   data() {
     return {
       id: 0,
       nombre: "",
       precio: 0,
-      foto:"",
+      foto: "",
       especificacion: "",
       ConfirMensaje: "",
       ConfirShow: false,
+      MensajeError:"",
+      ErrorShow: false,
       show: false,
+      rules: [
+      (v) => !!v || "Requerido.",     
+    ],
     };
   },
   methods: {
     guardar() {
+      if (this.id == undefined || this.id == "" 
+      || this.nombre == undefined || this.nombre == "" 
+      || this.precio == undefined || this.precio == "") {
+        this.abrirError("Ingrese los campos requeridos");
+        return;
+      }
       const producto = {
         id: this.id,
         nombre: this.nombre,
@@ -109,13 +133,26 @@ export default {
         especificacion: this.especificacion,
       };
       insertProducto(producto)
-        .then((response) => {
-          console.log("Se agregó el producto", response.data._id);
-          this.ConfirMensaje =
-            "Se ha agreado el producto: " + response.data._id;
-          this.ConfirShow = true;
-        })
-        .catch((err) => console.log(err));
+        .then((response) => this.abrirMensaje("Se ha agreado el producto: " + response.data.id))
+        .catch(() => this.abrirError("Error al guardar el producto"));
+    },
+    abrirMensaje(mensaje){
+      this.ConfirMensaje = mensaje;
+      this.ConfirShow = true;
+    },
+    cerrarMensaje(){
+      this.ConfirShow=false;
+      this.$router.push("/productos")
+    },
+    abrirError(mensaje){
+      this.MensajeError = mensaje;
+      this.ErrorShow = true;
+    },
+    cerrarError(){
+      this.ErrorShow=false;
+    },
+    reset() {
+      this.$refs.form.reset();
     },
   },
 };
