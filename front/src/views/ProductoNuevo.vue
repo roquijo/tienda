@@ -3,54 +3,75 @@
     <v-card elevation="15" width="50%" class="mx-auto">
       <v-row class="ma-auto">
         <v-col cols="12" sm="12" md="12">
-          <v-form role="form" class="mx-auto">
-            <div class="form-group">
-              <label for="name">Nombre del producto: </label>
-              <input
-                v-model="nombre"
-                type="text"
-                class="form-control"
-                id="nombre del producto"
-              />
-              <label for="info">Codigo: </label>
-              <input
-                v-model="id"
-                type="text"
-                class="form-control"
-                id="information"
-              />
-              <label for="precio">Precio: </label>
-              <input
-                v-model="precio"
-                type="text"
-                class="form-control"
-                id="precio"
-              />   
-              <label for="foto">Foto: </label>
-              <input
-                v-model="foto"
-                type="text"
-                class="form-control"
-                id="foto"
-              />   
-              <label for="especificacion">Especificacion: </label>
-              <v-text-field
-                v-model="especificacion"
-                type="text"               
-                id="especificacion"
-              ></v-text-field>           
-            </div>            
+          <v-form class="mx-auto">
+            <ConfirMensaje
+              :mensaje="ConfirMensaje"
+              :snackbar="ConfirShow"
+            ></ConfirMensaje>
+            <v-text-field
+              v-model="nombre"
+              label="Producto nuevo"
+              placeholder="Ingrese el nombre del producto"
+              required
+              filled
+              dense
+            ></v-text-field>
+            <v-text-field
+              v-model="id"
+              label="Código"
+              placeholder="Ingrese el código"
+              filled
+              dense
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="precio"
+              label="Precio"
+              placeholder="Ingrese el precio"
+              filled
+              dense
+              required
+            ></v-text-field>
+            <v-file-input
+              v-show="!show"
+              label="Subir archivo"
+              prepend-icon="mdi-upload"
+              append-outer-icon="mdi-paperclip"
+              v-model="foto"
+              filled
+              show-size
+              dense
+              truncate-length="15"
+              @click:append-outer="show = !show"
+            ></v-file-input>
+            <v-text-field
+              v-show="show"
+              prepend-icon="mdi-paperclip"
+              append-outer-icon="mdi-upload"
+              v-model="foto"
+              label="URL Imagen"
+              placeholder="Ingrese la URL"
+              filled
+              required
+              dense
+              autofocus
+              @click:append-outer="show = !show"
+              clearable
+            ></v-text-field>
+            <v-text-field
+              v-model="especificacion"
+              label="Descripción"
+              placeholder="Ingrese descripción breve"
+              filled
+              dense
+            ></v-text-field>
             <div class="text-center mt-4">
-              <button
-                type="submit"
-                class="btn btn-primary mr-5"
-                @click="guardar()"
-              >
+              <v-btn color="primary" class="mr-5" @click="guardar()">
                 Enviar
-              </button>
-              <button type="reset" class="btn btn-secondary ml-5">
+              </v-btn>
+              <v-btn type="reset" color="secondary" class="ml-5">
                 Cancelar
-              </button>
+              </v-btn>
             </div>
           </v-form>
         </v-col>
@@ -58,6 +79,47 @@
     </v-card>
   </v-container>
 </template>
+
+<script>
+import { insertProducto } from "../../src/services/Productos.Service";
+import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
+export default {
+  components: {
+    ConfirMensaje,
+  },
+  data() {
+    return {
+      id: 0,
+      nombre: "",
+      precio: 0,
+      foto:"",
+      especificacion: "",
+      ConfirMensaje: "",
+      ConfirShow: false,
+      show: false,
+    };
+  },
+  methods: {
+    guardar() {
+      const producto = {
+        id: this.id,
+        nombre: this.nombre,
+        precio: this.precio,
+        foto: this.foto,
+        especificacion: this.especificacion,
+      };
+      insertProducto(producto)
+        .then((response) => {
+          console.log("Se agregó el producto", response.data._id);
+          this.ConfirMensaje =
+            "Se ha agreado el producto: " + response.data._id;
+          this.ConfirShow = true;
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+};
+</script>
 
 <style>
 /* Estilo del área del input[file] */
@@ -176,34 +238,3 @@ input[type="file"]:hover {
   }
 }
 </style>
-
-<script>
-import { insertProducto } from "../../src/services/Productos.Service";
-export default {
-  data() {
-    return {
-      id: 0,
-      nombre: "",
-      precio: 0,
-      foto: "",
-      especificacion: "",
-    };
-  },
-  methods: {
-    guardar() {
-      const producto = {
-        id: this.id,
-        nombre: this.nombre,
-        precio: this.precio,
-        foto: this.foto,
-        especificacion: this.especificacion,        
-      };
-      insertProducto(producto)
-        .then((response) => {
-          console.log("Se ha agreado el producto", response.data._id);
-        })
-        .catch((err) => console.log(err));
-    },
-  },
-};
-</script>

@@ -36,6 +36,25 @@ module.exports = class UsuarioController {
         }
     }
 
+    static async validarUsuario(req, res){
+        try {
+
+            const credenciales = req.body;           
+            const usuario = await usuarioModel.findOne({"usuario": credenciales.usuario});
+            if(usuario == undefined || usuario == null || usuario == ""){
+                res.status(404).json({ "mensaje":"Usuario no valido" });
+            }
+            else if(usuario.contraseña != credenciales.contraseña){
+                res.status(403).json({ "mensaje":"Usuario contraseña no valida" });
+            }
+            else if(usuario.contraseña == credenciales.contraseña){
+                res.status(200).json(usuario);
+            }         
+        } catch (err) {
+            res.status(400).json({ mensaje: err.mensaje });
+        }
+    }
+
     static async update(req, res) {
         try {
             const id = req.params.id;

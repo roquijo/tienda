@@ -7,10 +7,7 @@ const usuariosSchema = mongoose.Schema({
     "usuario": String,
     "correo": String,
     "contraseña": String,
-    "ciudad": String,
-    "dirección": String,
-    "edad": Number,
-    "tipoUsuario": Number
+    "tipoUsuario": String
 });
 
 module.exports = mongoose.model("usuarios", usuariosSchema);

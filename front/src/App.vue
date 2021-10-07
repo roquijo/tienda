@@ -5,8 +5,12 @@
     <Navbar></Navbar>
     <!-- Auí está el contenido principal -->
     <v-main>
-      <!-- Aquí se muestran las vistas -->
-      <router-view />
+      <v-container fluid>
+        <!-- Aquí se muestran las vistas -->
+        <!-- <transition name="slide" mode="out-in"> -->
+          <router-view />
+        <!-- </transition> -->
+      </v-container>
     </v-main>
     <!-- Aquí se añade el pie de página -->
     <v-footer color="grey lighten-1" padless>
@@ -31,4 +35,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.slide-enter-active,
+.slide-leave-active{
+  transition: opacity 1s, transform 1s;
+}
+
+.slide-enter,
+.slide-leave {
+  opacity: 0;
+  transform: translateY(30%);
+}
+</style>

@@ -11,6 +11,8 @@ routes.get("/usuarios/:id", usuarioController.getById);
 routes.post("/usuarios/", usuarioController.insert);
 routes.put("/usuarios/:id", usuarioController.update);
 routes.delete("/usuarios/:id", usuarioController.delete);
+routes.post("/validarUsuario", usuarioController.validarUsuario);
+
 
 // Rutas de productos
 routes.get("/productos", productoController.getAll);

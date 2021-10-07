@@ -1,7 +1,5 @@
 <template>
   <v-form
-    method="post"
-    action="/Perfil"
     ref="loginForm"
     v-model="valid"
     lazy-validation
@@ -14,11 +12,11 @@
               <h2>Ingreso:</h2>
             </legend>
             <v-text-field
-              v-model="email"
-              append-icon="mdi-email"
-              :rules="emailRules"
-              label="E-mail"
-              placeholder="Ingrese el correo"
+              v-model="user"
+              append-icon="mdi-account"
+              :rules="userRules"
+              label="Usuario"
+              placeholder="Ingrese el Usuario"
               required
               filled
             ></v-text-field>
@@ -26,7 +24,7 @@
               v-model="password"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
-              :rules="[rules.required, rules.min]"
+              :rules="[rules.required]"
               name="password"
               label="Contraseña"
               hint="Ingrese al menos 8 caracteres"
@@ -70,6 +68,7 @@
 </template>
 
 <script>
+import { validateUser } from "../services/Usuario.Service";
 export default {
   data: () => ({
     valid: true,
@@ -77,23 +76,28 @@ export default {
     // select: null,
     // items: ["Administador", "Cliente"],
     
-    email: "",
-    emailRules: [
-      (v) => !!v || "E-mail es requerido",
-      (v) => /.+@.+\..+/.test(v) || "E-mail debe ser válido",
+    user: "",
+    userRules: [
+      (v) => !!v || "El usuario es requerido",     
     ],
-
     show: false,
     password: "",
     rules: {
-      required: (value) => !!value || "Requerido.",
-      min: (v) => v.length >= 8 || "Mínimo 8 caracteres",
+      required: (value) => !!value || "Requerido.",     
     },
   }),
 
   methods: {
     validate() {
       this.$refs.loginForm.validate();
+      validateUser(this.user, this.password)
+      .then((response) => {
+        const user = response.data;
+        sessionStorage.setItem("usuario", user.usuario);
+        sessionStorage.setItem("tipoUsuario",user.tipoUsuario);
+        window.location.href = "/productos";         
+      })
+      .catch((error) => console.error(error));
     },
     clear() {
       this.email = "";

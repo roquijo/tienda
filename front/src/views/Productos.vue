@@ -25,8 +25,8 @@
                 ></a>
               </li>
             </ul>
-            <span class="product-new-label">Sale</span>
-            <span class="product-discount-label">20%</span>
+            <!-- <span class="product-new-label">Sale</span>
+            <span class="product-discount-label">10%</span> -->
           </div>
           <div class="product-content">
             <h3 class="title">
@@ -35,25 +35,23 @@
             <div class="price">${{ producto.precio }}</div>
             <a class="add-to-cart" href="">+ Añadir al Carro</a>
           </div>
-          <div class="my-2">
-            <v-btn class="mx-2">Editar</v-btn>
-            <v-btn class="mx-2">Eliminar</v-btn>
-          </div>
+          <!-- <div class="my-2">
+            <v-btn color="success" class="mx-2">Editar</v-btn>
+            <v-btn color="secondary" class="mx-2">Eliminar</v-btn>
+          </div> -->
         </div>
+        <v-btn
+          color="success"
+          absolute
+          fixed
+          fab
+          right
+          to="/productonuevo"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
-
-    <v-btn
-      id="addButton"
-      color="primary"
-      dark
-      absolute
-      right
-      fab
-      to="/productonuevo"
-    >
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
   </v-container>
 </template>
 
@@ -77,7 +75,7 @@ export default {
     getAllProductos()
       .then((response) => {
         this.productos = response.data;
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((error) => console.error(error));
   },
@@ -264,14 +262,14 @@ img {
 }
 
 .product-grid .product-content {
-  background-color: rgb(212, 212, 212);
+  background-color: rgba(212, 212, 212, 0.822);
   text-align: center;
-  padding: 32px 0;
+  padding: 3px 0;
   margin: 0 auto;
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -27px;
+  bottom: -30px;
   z-index: 1;
   transition: all 0.3s;
 }
@@ -291,6 +289,7 @@ img {
 
 .product-grid .title a {
   color: #828282;
+  text-decoration: none;
 }
 
 .product-grid .title a:hover,
@@ -322,6 +321,7 @@ img {
   color: #000;
   font-size: 13px;
   font-weight: 600;
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 990px) {
