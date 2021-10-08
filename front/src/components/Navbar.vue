@@ -20,9 +20,17 @@
           </li>
           <li class="nav-item">
             <Modal></Modal>
-          </li>
+          </li>                       
         </ul>
+
+        
         <form class="d-flex" style="margin-top:13px;">
+      <div class="pt-1 px-6">
+        <a href="/carrito"
+                  ><em class="fa fa-shopping-cart" id="carrito"></em
+        ></a>
+      </div>
+
           <input
             class="form-control me-2"
             type="search"
@@ -49,5 +57,9 @@ export default {
 <style>
 #logo {
   height: 50px;
+}
+#carrito{
+  color: white;
+  font-size: 25px;
 }
 </style>

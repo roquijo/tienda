@@ -10,17 +10,24 @@
             </a>
             <ul class="social">
               <li class="esp">
-                <a href="/detalles" data-tip="Especificaciones"
+                <a href="/detalles" data-tip="Especificaciones" @click="detalles(
+                  producto.id,
+                  producto.nombre,
+                  producto.precio,
+                  producto.foto,
+                  producto.especificacion,
+                )"
                   ><em class="fa fa-search"></em
                 ></a>
-              </li>
-              <li class="add">
-                <a href="" data-tip="Añadir a la lista de deseos"
-                  ><em class="fa fa-shopping-bag"></em
-                ></a>
-              </li>
+              </li>            
               <li class="buy">
-                <a href="" data-tip="Añadir al carrito"
+                <a href="" data-tip="Añadir al carrito" @click="añadirAlCarrito(
+                  producto.id,
+                  producto.nombre,
+                  producto.precio,
+                  producto.foto,
+                  producto.especificacion,
+                )"
                   ><em class="fa fa-shopping-cart"></em
                 ></a>
               </li>
@@ -68,13 +75,14 @@ export default {
         foto: this.foto,
         especificacion: this.especificacion,
       },
+      productosCarrito: [],
+      
     };
   },
   mounted() {
     getAllProductos()
       .then((response) => {
         this.productos = response.data;
-        console.log(response.data);
       })
       .catch((error) => console.error(error));
   },
@@ -86,6 +94,32 @@ export default {
         this.productos = this.productos.filter((item)=> item.id != id)
       })
       .catch(()=>{console.log("Error")})
+    },
+    detalles(id,nombre,precio,foto,especificacion){
+    const productoDetalle = {
+        id: id,
+        nombre: nombre,
+        precio: precio,
+        foto: foto,
+        especificacion: especificacion,
+      } 
+      localStorage.detallesProducto = JSON.stringify(productoDetalle);
+    },
+    añadirAlCarrito(id,nombre,precio,foto,especificacion){
+    
+    var productoCarrito = {
+        id: id,
+        nombre: nombre,
+        precio: precio,
+        foto: foto,
+        especificacion: especificacion,
+      }     
+      var carritoStorage = JSON.parse(localStorage.getItem('carritoCompra'));
+      if(carritoStorage == null){
+        carritoStorage = [];
+      }
+      carritoStorage.push(productoCarrito);
+      localStorage.carritoCompra = JSON.stringify(carritoStorage);
     }
   },
 };
@@ -202,10 +236,9 @@ img {
 
 .product-grid .social li.buy a:hover {
   color: #fff;
-  background-color: #cf2e11;
+  background-color: #cf2d11;
 }
 
-.product-grid .social li a:after,
 .product-grid .social li a:before {
   content: attr(data-tip);
   color: #fff;
@@ -223,7 +256,6 @@ img {
 }
 
 .product-grid .social li a:after {
-  content: "Holaaaaa";
   height: 15px;
   width: 15px;
   border-radius: 0;

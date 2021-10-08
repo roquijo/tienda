@@ -4,19 +4,10 @@
       <div class="product-details" >
         <font size="6" face="Comic Sans MS,arial,verdana"><strong>{{ producto.nombre }}</strong></font>
 
-        <span class="hint-star star">
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star-half-o" aria-hidden="true"></i>
-          <i class="fa fa-star-o" aria-hidden="true"></i>
-          <i class="fa fa-star-o" aria-hidden="true"></i>
-        </span>
-
         <br /><br />
         <!-- The most important information about the product -->
         <i class="information"
-          >{{ producto.descripcion }}
+          >{{ producto.especificacion }}
         </i>
 
         <!-- 		Control -->
@@ -24,7 +15,7 @@
           <!-- Start Button buying -->
           <button class="btn">
             <!-- 		the Price -->
-            <span class="price">{{ producto.precio }}</span>
+            <span class="price">${{ producto.precio }}</span>
             <!-- 		shopping cart icon-->
 
             <!-- 		Buy Now / ADD to Cart-->
@@ -61,22 +52,10 @@
       <!-- 	Start product image & Information -->
 
       <div class="product-image">
+        <div id="imagen">
         <img
           :src="producto.foto"
         />
-
-        <!-- 	product Information-->
-        <div class="info"><p>
-          <h2>DESCRIPCION</h2>
-          <ul>
-            <li ><strong>Tamaño: </strong>XL</li>
-            <li><strong>Color: </strong>Negro</li>
-            <li><strong>Marca: </strong>G2</li>
-            <li><strong>Cuidados: </strong>No mojar</li>
-            <li><strong>Vendedor: </strong>Benito</li>
-            <li><strong>Detalles: </strong>Gamer, Ergonomica, con rueditas</li>
-            <li><strong>Garantia </strong>1 Año</li>
-          </ul>
         </div>
       </div>
       <!--  End product image  -->
@@ -114,6 +93,10 @@ body {
   background-image: linear-gradient(135deg, #ffffff 10%, #000000 100%);
   background-attachment: fixed;
   background-size: cover;
+}
+
+#imagen{
+  position: relative;
 }
 
 #container {
@@ -365,8 +348,6 @@ input[type="number"]::-webkit-outer-spin-button {
 </style>
 
 <script>
-import { getProductByID } from "../services/Productos.Service";
-
 export default {
   data() {
     return {
@@ -386,12 +367,8 @@ export default {
     },
   },
   mounted() {   
-    const id = 1;
-    getProductByID(id)
-      .then((response) => {
-        this.producto = response;
-      })
-      .catch((error) => console.error(error));
+    this.producto = JSON.parse(localStorage.getItem('detallesProducto'))
+    console.log(this.producto);
   },
 };
 </script>
