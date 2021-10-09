@@ -32,8 +32,8 @@
                 ></a>
               </li>
             </ul>
-            <!-- <span class="product-new-label">Sale</span>
-            <span class="product-discount-label">10%</span> -->
+            <span class="product-new-label">Sale</span>
+            <span class="product-discount-label">10%</span>
           </div>
           <div class="product-content">
             <h3 class="title">
@@ -42,8 +42,8 @@
             <div class="price">${{ producto.precio }}</div>
             <a class="add-to-cart" href="">+ Añadir al Carro</a>
           </div>
-          <div class="my-2">
-            <v-btn color="success" class="mx-2">Editar</v-btn>
+          <div v-show="isLogged" class="my-2">
+            <v-btn color="success" class="mx-2" @click="editarProducto(producto.id)">Editar</v-btn>
             <v-btn color="secondary" class="mx-2" @click="eliminarProducto(producto.id)">Eliminar</v-btn>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default {
         especificacion: this.especificacion,
       },
       productosCarrito: [],
-      
+      isLogged: false,
     };
   },
   mounted() {
@@ -87,6 +87,9 @@ export default {
       .catch((error) => console.error(error));
   },
   methods: {
+    editarProducto(id){
+      this.$router.push(`/editarproducto/${id}`); 
+    },
     eliminarProducto(id){
       deleteProducto(id)
       .then(()=>{

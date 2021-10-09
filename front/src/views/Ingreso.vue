@@ -1,9 +1,5 @@
 <template>
-  <v-form
-    ref="loginForm"
-    v-model="valid"
-    lazy-validation
-  >
+  <v-form ref="loginForm" v-model="valid" lazy-validation>
     <v-container>
       <v-card elevation="15" width="75%" class="mx-auto">
         <v-row class="mt-4 ma-auto" align="center" align-content="center">
@@ -60,6 +56,16 @@
             <v-btn @click="clear" color="#616161" dark>
               Limpiar
             </v-btn>
+            <ConfirMensaje
+              :mensaje="ConfirMensaje"
+              :snackbar="ConfirShow"
+              :close="cerrarMensaje"
+            ></ConfirMensaje>
+            <MensajeError
+              :mensaje="MensajeError"
+              :snackbar="ErrorShow"
+              :close="cerrarError"
+            ></MensajeError>
           </v-col>
         </v-row>
       </v-card>
@@ -69,21 +75,25 @@
 
 <script>
 import { validateUser } from "../services/Usuario.Service";
+import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
+import MensajeError from "../../src/components/MensajeError.vue";
 export default {
+  components: {
+    ConfirMensaje,
+    MensajeError,
+  },
   data: () => ({
     valid: true,
-
-    // select: null,
-    // items: ["Administador", "Cliente"],
-    
+    ConfirMensaje: "",
+    ConfirShow: false,
+    MensajeError: "",
+    ErrorShow: false,
     user: "",
-    userRules: [
-      (v) => !!v || "El usuario es requerido",     
-    ],
+    userRules: [(v) => !!v || "El usuario es requerido"],
     show: false,
     password: "",
     rules: {
-      required: (value) => !!value || "Requerido.",     
+      required: (value) => !!value || "Requerido.",
     },
   }),
 
@@ -91,19 +101,35 @@ export default {
     validate() {
       this.$refs.loginForm.validate();
       validateUser(this.user, this.password)
-      .then((response) => {
-        const user = response.data;
-        sessionStorage.setItem("usuario", user.usuario);
-        sessionStorage.setItem("tipoUsuario",user.tipoUsuario);
-        window.location.href = "/productos";         
-      })
-      .catch((error) => console.error(error));
+        .then((response) => {
+          const user = response.data;
+          sessionStorage.setItem("usuario", user.usuario);
+          sessionStorage.setItem("tipoUsuario", user.tipoUsuario);
+        })
+        .catch(() => this.abrirError("Error al registrar el usuario"));
+      this.$router.push("/productos");
+      this.abrirMnsaje("Se ha creado el usuario");
     },
     clear() {
       this.email = "";
       this.select = null;
       this.checkbox = null;
       this.$refs.loginForm.reset();
+    },
+    abrirMensaje(mensaje) {
+      this.ConfirMensaje = mensaje;
+      this.ConfirShow = true;
+    },
+    cerrarMensaje() {
+      this.ConfirShow = false;
+      this.$router.push("/productos");
+    },
+    abrirError(mensaje) {
+      this.MensajeError = mensaje;
+      this.ErrorShow = true;
+    },
+    cerrarError() {
+      this.ErrorShow = false;
     },
   },
 };

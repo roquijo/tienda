@@ -4,9 +4,10 @@
       <v-row class="ma-auto">
         <v-col cols="12" sm="12" md="12">
           <v-form class="mx-auto" ref="form">
+            <h2 class="text-center mb-5">{{title}}</h2>
             <v-text-field
               v-model="nombre"
-              label="Producto nuevo *"
+              label="Producto *"
               placeholder="Ingrese el nombre del producto"
               required
               filled
@@ -33,19 +34,19 @@
               prefix="$"
             ></v-text-field>
             <v-file-input
-              v-show="!show"
+              v-show="show"
               label="Subir archivo"
               prepend-icon="mdi-upload"
               append-outer-icon="mdi-paperclip"
-              v-model="foto"
               filled
+              class="v-model='foto'"
               show-size
               dense
               truncate-length="15"
               @click:append-outer="show = !show"
             ></v-file-input>
             <v-text-field
-              v-show="show"
+              v-show="!show"
               prepend-icon="mdi-paperclip"
               append-outer-icon="mdi-upload"
               v-model="foto"
@@ -66,10 +67,16 @@
               dense
             ></v-text-field>
             <div class="text-center mt-4">
-              <v-btn color="primary" class="mr-5" @click="guardar()">
+              <v-btn color="primary" v-if="!isEdit" class="mr-5" @click="guardar()">
                 Enviar
               </v-btn>
-              <v-btn  @click="reset" color="secondary" class="ml-5">
+              <v-btn color="success" v-if="isEdit" class="mr-5" @click="actualizar()">
+                Actualizar
+              </v-btn>
+              <v-btn color="secondary" v-if="!isEdit" class="ml-5" @click="reset()">
+                Limpiar
+              </v-btn>
+              <v-btn color="error" v-if="isEdit" class="ml-5" @click="cancelar()">
                 Cancelar
               </v-btn>
             </div>
@@ -91,37 +98,63 @@
 </template>
 
 <script>
-import { insertProducto } from "../../src/services/Productos.Service";
+import {
+  insertProducto,
+  getProducto,
+  updateProducto
+} from "../../src/services/Productos.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
 import MensajeError from "../../src/components/MensajeError.vue";
 
 export default {
   components: {
     ConfirMensaje,
-    MensajeError
+    MensajeError,
   },
   data() {
     return {
+      title: "Nuevo producto",
       id: 0,
       nombre: "",
       precio: 0,
       foto: "",
       especificacion: "",
+      isEdit: false,
       ConfirMensaje: "",
       ConfirShow: false,
-      MensajeError:"",
+      MensajeError: "",
       ErrorShow: false,
       show: false,
-      rules: [
-      (v) => !!v || "Requerido.",     
-    ],
+      rules: [(v) => !!v || "Requerido."],
     };
+  },
+  created() {
+    const id = this.$route.params.id;
+    if (id != undefined) {
+      getProducto(id)
+        .then((response) => {
+          const producto = response.data;
+          this.id = producto.id;
+          this.nombre = producto.nombre;
+          this.precio = producto.precio;
+          this.foto = producto.foto;
+          this.especificacion = producto.especificacion;
+          this.title = "Editar producto";
+          this.isEdit = true;
+        })
+        .catch(() => this.abrirError("Datos no encontrados"));
+    }
   },
   methods: {
     guardar() {
-      if (this.id == undefined || this.id == "" 
-      || this.nombre == undefined || this.nombre == "" 
-      || this.precio == undefined || this.precio == "") {
+      if (
+        this.id == undefined ||
+        this.id == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.precio == undefined ||
+        this.precio == ""
+      ) {
         this.abrirError("Ingrese los campos requeridos");
         return;
       }
@@ -133,27 +166,57 @@ export default {
         especificacion: this.especificacion,
       };
       insertProducto(producto)
-        .then((response) => this.abrirMensaje("Se ha agreado el producto: " + response.data.id))
+        .then((response) =>
+          this.abrirMensaje("Se ha agreado el producto: " + response.data.id)
+        )
         .catch(() => this.abrirError("Error al guardar el producto"));
     },
-    abrirMensaje(mensaje){
+    actualizar() {
+      if (
+        this.id == undefined ||
+        this.id == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.precio == undefined ||
+        this.precio == ""
+      ) {
+        this.abrirError("Ingrese los campos requeridos");
+        return;
+      }
+      const producto = {
+        id: this.id,
+        nombre: this.nombre,
+        precio: this.precio,
+        foto: this.foto,
+        especificacion: this.especificacion,
+      };
+      updateProducto(this.id, producto)
+        .then(() =>
+          this.abrirMensaje("Se ha actualizado el producto: " + this.id)
+        )
+        .catch(() => this.abrirError("Error al actualizar el producto"));
+    },
+    abrirMensaje(mensaje) {
       this.ConfirMensaje = mensaje;
       this.ConfirShow = true;
     },
-    cerrarMensaje(){
-      this.ConfirShow=false;
-      this.$router.push("/productos")
+    cerrarMensaje() {
+      this.ConfirShow = false;
+      this.$router.push("/productos");
     },
-    abrirError(mensaje){
+    abrirError(mensaje) {
       this.MensajeError = mensaje;
       this.ErrorShow = true;
     },
-    cerrarError(){
-      this.ErrorShow=false;
+    cerrarError() {
+      this.ErrorShow = false;
     },
     reset() {
       this.$refs.form.reset();
     },
+    cancelar(){
+      this.$router.push("/productos");
+    }
   },
 };
 </script>
