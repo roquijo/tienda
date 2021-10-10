@@ -28,11 +28,12 @@ module.exports = class UsuarioController {
 
     static async insert(req, res) {
         try {
-            const usuario = req.body;
-            const nuevocliente = await usuarioModel.create(usuario);
+            let usuario = req.body;
+            usuario = await usuarioModel.create(usuario);
+            usuario.contraseña = undefined;
             res.status(201).json(nuevocliente);
         } catch (err) {
-            res.status(400).json({ mensaje: err.mensaje });
+            res.status(400).json({ "mensaje": err.mensaje });
         }
     }
 
@@ -45,13 +46,13 @@ module.exports = class UsuarioController {
                 res.status(404).json({ "mensaje":"Usuario no valido" });
             }
             else if(usuario.contraseña != credenciales.contraseña){
-                res.status(403).json({ "mensaje":"Usuario contraseña no valida" });
+                res.status(403).json({ "mensaje":"Contraseña no valida" });
             }
             else if(usuario.contraseña == credenciales.contraseña){
                 res.status(200).json(usuario);
             }         
         } catch (err) {
-            res.status(400).json({ mensaje: err.mensaje });
+            res.status(400).json({ "mensaje": err.mensaje });
         }
     }
 

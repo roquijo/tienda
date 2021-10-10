@@ -10,24 +10,33 @@
             </a>
             <ul class="social">
               <li class="esp">
-                <a href="/detalles" data-tip="Especificaciones" @click="detalles(
-                  producto.id,
-                  producto.nombre,
-                  producto.precio,
-                  producto.foto,
-                  producto.especificacion,
-                )"
+                <a
+                  href="/detalles"
+                  data-tip="Especificaciones"
+                  @click="
+                    detalles(
+                      producto.id,
+                      producto.nombre,
+                      producto.precio,
+                      producto.foto,
+                      producto.especificacion
+                    )
+                  "
                   ><em class="fa fa-search"></em
                 ></a>
-              </li>            
+              </li>
               <li class="buy">
-                <a href="" data-tip="Añadir al carrito" @click="añadirAlCarrito(
-                  producto.id,
-                  producto.nombre,
-                  producto.precio,
-                  producto.foto,
-                  producto.especificacion,
-                )"
+                <a
+                  data-tip="Añadir al carrito"
+                  @click="
+                    añadirAlCarrito(
+                      producto.id,
+                      producto.nombre,
+                      producto.precio,
+                      producto.foto,
+                      producto.especificacion
+                    )
+                  "
                   ><em class="fa fa-shopping-cart"></em
                 ></a>
               </li>
@@ -42,9 +51,19 @@
             <div class="price">${{ producto.precio }}</div>
             <a class="add-to-cart" href="">+ Añadir al Carro</a>
           </div>
-          <div v-show="isLogged" class="my-2">
-            <v-btn color="success" class="mx-2" @click="editarProducto(producto.id)">Editar</v-btn>
-            <v-btn color="secondary" class="mx-2" @click="eliminarProducto(producto.id)">Eliminar</v-btn>
+          <div v-if="isLogged" class="my-2">
+            <v-btn
+              color="success"
+              class="mx-2"
+              @click="editarProducto(producto.id)"
+              >Editar</v-btn
+            >
+            <v-btn
+              color="secondary"
+              class="mx-2"
+              @click="eliminarProducto(producto.id)"
+              >Eliminar</v-btn
+            >
           </div>
         </div>
         <v-btn
@@ -54,9 +73,20 @@
           fab
           right
           to="/productonuevo"
+          v-if="isLogged"
         >
           <v-icon>mdi-plus</v-icon>
         </v-btn>
+        <ConfirMensaje
+          :mensaje="ConfirMensaje"
+          :snackbar="ConfirShow"
+          :close="cerrarMensaje"
+        ></ConfirMensaje>
+        <MensajeError
+          :mensaje="MensajeError"
+          :snackbar="ErrorShow"
+          :close="cerrarError"
+        ></MensajeError>
       </v-col>
     </v-row>
   </v-container>
@@ -64,9 +94,20 @@
 
 <script>
 import { getAllProductos, deleteProducto } from "../services/Productos.Service";
+import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
+import MensajeError from "../../src/components/MensajeError.vue";
 export default {
+  components: {
+    ConfirMensaje,
+    MensajeError,
+  },
+  props: ["isLogged"],
   data() {
     return {
+      ConfirMensaje: "",
+      ConfirShow: false,
+      MensajeError: "",
+      ErrorShow: false,
       productos: [],
       producto: {
         id: this.id,
@@ -76,7 +117,7 @@ export default {
         especificacion: this.especificacion,
       },
       productosCarrito: [],
-      isLogged: false,
+      islogged: false,
     };
   },
   mounted() {
@@ -87,43 +128,64 @@ export default {
       .catch((error) => console.error(error));
   },
   methods: {
-    editarProducto(id){
-      this.$router.push(`/editarproducto/${id}`); 
+    editarProducto(id) {
+      this.$router.push(`/editarproducto/${id}`);
     },
-    eliminarProducto(id){
+    eliminarProducto(id) {
       deleteProducto(id)
-      .then(()=>{
-        console.log("Exito");
-        this.productos = this.productos.filter((item)=> item.id != id)
-      })
-      .catch(()=>{console.log("Error")})
+        .then(() => {
+          this.abrirMensaje("Se ha elimidado el producto");
+          this.productos = this.productos.filter((item) => item.id != id);
+        })
+        .catch(() => {
+          this.abrirError("Error al eliminar el producto");
+        });
     },
-    detalles(id,nombre,precio,foto,especificacion){
-    const productoDetalle = {
+    detalles(id, nombre, precio, foto, especificacion) {
+      const productoDetalle = {
         id: id,
         nombre: nombre,
         precio: precio,
         foto: foto,
         especificacion: especificacion,
-      } 
+      };
       localStorage.detallesProducto = JSON.stringify(productoDetalle);
     },
-    añadirAlCarrito(id,nombre,precio,foto,especificacion){
-    
-    var productoCarrito = {
+    añadirAlCarrito(id, nombre, precio, foto, especificacion) {
+      var productoCarrito = {
         id: id,
         nombre: nombre,
         precio: precio,
         foto: foto,
         especificacion: especificacion,
-      }     
-      var carritoStorage = JSON.parse(localStorage.getItem('carritoCompra'));
-      if(carritoStorage == null){
+      };
+      if (productoCarrito == undefined) {
+        this.abrirError("Error al agregar el producto al carrito");
+      }
+      var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
+      if (carritoStorage == null) {
         carritoStorage = [];
       }
       carritoStorage.push(productoCarrito);
       localStorage.carritoCompra = JSON.stringify(carritoStorage);
-    }
+      localStorage.setItem("carritoCompra", JSON.stringify(carritoStorage));
+      this.abrirMensaje("Se ha añadido el producto al carrito");
+    },
+    abrirMensaje(mensaje) {
+      this.ConfirMensaje = mensaje;
+      this.ConfirShow = true;
+    },
+    cerrarMensaje() {
+      this.ConfirShow = false;
+    },
+    abrirError(mensaje) {
+      this.MensajeError = mensaje;
+      this.ErrorShow = true;
+    },
+    cerrarError() {
+      this.ErrorShow = false;
+      // location.reload();
+    },
   },
 };
 </script>

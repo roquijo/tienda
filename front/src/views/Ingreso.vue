@@ -47,9 +47,9 @@
             <v-btn
               :disabled="!valid"
               class="mr-4"
-              type="submit"
+              
               color="primary"
-              @click="validate"
+              @click="validar()"
             >
               Ingresar
             </v-btn>
@@ -98,17 +98,15 @@ export default {
   }),
 
   methods: {
-    validate() {
-      this.$refs.loginForm.validate();
+    validar() {
       validateUser(this.user, this.password)
         .then((response) => {
           const user = response.data;
           sessionStorage.setItem("usuario", user.usuario);
           sessionStorage.setItem("tipoUsuario", user.tipoUsuario);
+          this.abrirMensaje("Se ha iniciado sesión");
         })
-        .catch(() => this.abrirError("Error al registrar el usuario"));
-      this.$router.push("/productos");
-      this.abrirMnsaje("Se ha creado el usuario");
+        .catch(() => this.abrirError("Error con el ingreso de usuario"));
     },
     clear() {
       this.email = "";
@@ -122,6 +120,7 @@ export default {
     },
     cerrarMensaje() {
       this.ConfirShow = false;
+      this.$emit("isLogged");
       this.$router.push("/productos");
     },
     abrirError(mensaje) {
@@ -130,6 +129,7 @@ export default {
     },
     cerrarError() {
       this.ErrorShow = false;
+      this.clear();
     },
   },
 };
