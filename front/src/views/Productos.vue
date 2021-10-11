@@ -41,8 +41,6 @@
                 ></a>
               </li>
             </ul>
-            <span class="product-new-label">Sale</span>
-            <span class="product-discount-label">10%</span>
           </div>
           <div class="product-content">
             <h3 class="title">
@@ -81,7 +79,7 @@
           :mensaje="ConfirMensaje"
           :snackbar="ConfirShow"
           :close="cerrarMensaje"
-        ></ConfirMensaje>
+        ></ConfirMensaje>      
         <MensajeError
           :mensaje="MensajeError"
           :snackbar="ErrorShow"
@@ -91,7 +89,6 @@
     </v-row>
   </v-container>
 </template>
-
 <script>
 import { getAllProductos, deleteProducto } from "../services/Productos.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
@@ -101,9 +98,9 @@ export default {
     ConfirMensaje,
     MensajeError,
   },
-  props: ["isLogged"],
   data() {
     return {
+      isLogged: false,
       ConfirMensaje: "",
       ConfirShow: false,
       MensajeError: "",
@@ -117,16 +114,17 @@ export default {
         especificacion: this.especificacion,
       },
       productosCarrito: [],
-      islogged: false,
     };
   },
   mounted() {
     getAllProductos()
       .then((response) => {
         this.productos = response.data;
+        this.isLogged = sessionStorage.getItem("sesion");       
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error));     
   },
+  
   methods: {
     editarProducto(id) {
       this.$router.push(`/editarproducto/${id}`);

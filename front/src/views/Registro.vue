@@ -122,6 +122,8 @@
 </template>
 
 <script>
+import { insertUsuario } from "../../src/services/Usuario.Service";
+
 export default {
   data: () => ({
     valid: true,
@@ -156,6 +158,30 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate();
+      if (
+        this.id == undefined ||
+        this.id == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.precio == undefined ||
+        this.precio == ""
+      ) {
+        this.abrirError("Ingrese los campos requeridos");
+        return;
+      }
+      const producto = {
+        id: this.id,
+        nombre: this.nombre,
+        precio: this.precio,
+        foto: this.foto,
+        especificacion: this.especificacion,
+      };
+      insertUsuario(producto)
+        .then((response) =>
+          this.abrirMensaje("Se ha agreado el producto: " + response.data.id)
+        )
+        .catch(() => this.abrirError("Error al guardar el producto"));
+    
     },
     reset() {
       this.$refs.form.reset();

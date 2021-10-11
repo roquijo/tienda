@@ -10,7 +10,7 @@
         role="navigation"
       >
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li v-if="isLogged" class="nav-item">
+          <li v-if="isLogged"  class="nav-item">
             <a
               class="nav-link active"
               aria-current="true"
@@ -24,7 +24,7 @@
               >Ingresar</a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="!isLogged">
             <a class="nav-link active" aria-current="true" href="/registro"
               >Registrarse</a
             >
@@ -36,7 +36,7 @@
 
         <form class="d-flex menu">
           <!-- <h5>{{ usuario }}</h5> -->
-          <div class="pt-1 px-3">
+          <div  v-if="isLogged" class="pt-1 px-3">
             <a href="/perfil"><em class="fa fa-user-circle iconos"></em></a>
           </div>
           <div class="pt-1 px-6">
@@ -64,19 +64,22 @@ export default {
   components: {
     Modal,
   },
-  data: () => ({}),
+  data(){
+    return{
+      isLogged:false,
+    }
+  },
   methods: {
     cerrarSesion() {
       sessionStorage.removeItem("usuario");
       sessionStorage.removeItem("tipoUsuario");
+      sessionStorage.removeItem("id");
+      sessionStorage.removeItem("sesion");
       window.location.reload();
     },
   },
-  computed: {
-    isLogged() {
-      const usuario = sessionStorage.getItem("usuario");
-      return usuario != undefined;
-    },
+  beforeMount () {   
+      this.isLogged = sessionStorage.getItem("sesion");     
   },
 };
 </script>

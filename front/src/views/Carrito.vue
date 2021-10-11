@@ -1,7 +1,9 @@
 <template>
   <v-card max-width="450" class="mx-auto">
     <v-list>
-      <v-subheader v-show="vacio"><h4>Carrito de Compras: VACÍO!!</h4></v-subheader>
+      <v-subheader v-show="vacio"
+        ><h4>Carrito de Compras: VACÍO!!</h4></v-subheader
+      >
 
       <v-subheader v-show="!vacio"><h5>Carrito de Compras</h5></v-subheader>
 
@@ -20,6 +22,9 @@
                 v-html="'Precio: <h6>$'+ producto.precio+'</h6>'"
               ></v-list-item-subtitle>
               <v-list-item-subtitle
+                v-html="'Total: $'+cantidad"
+              ></v-list-item-subtitle>
+              <v-list-item-subtitle
                 v-html="'Detalles : ' + producto.especificacion"
                 class="my-2"
               ></v-list-item-subtitle>
@@ -32,6 +37,26 @@
               >
                 <v-icon color="white"> mdi-close-circle</v-icon>
               </v-chip>
+              <v-slider
+                v-model="slider"
+                class="align-center control2"
+                :max="max"
+                :min="min"
+                hide-details
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model.number="slider"
+                    class="mt-0 pt-0"
+                    hide-details
+                    single-line
+                    type="number"
+                    style="width: 50px"
+                    max="50"
+                    min="1"
+                  ></v-text-field>
+                </template>
+              </v-slider>
             </div>
             <v-divider></v-divider>
           </v-list-item-content>
@@ -59,9 +84,12 @@ export default {
     ConfirMensaje,
     MensajeError,
   },
-  props: ["usuario", "sesion"],
+  props: [],
   data() {
     return {
+      min: 1,
+      max: 50,
+      cantidad:0,
       ConfirMensaje: "",
       ConfirShow: false,
       MensajeError: "",
@@ -96,8 +124,8 @@ export default {
     },
     cerrarMensaje() {
       this.ConfirShow = false;
-      if (this.listaProductos=="") {
-        this.vacio = true
+      if (this.listaProductos == "") {
+        this.vacio = true;
       }
     },
     abrirError(mensaje) {
@@ -107,6 +135,9 @@ export default {
     cerrarError() {
       this.ErrorShow = false;
     },
+    // cantidades(){
+    //   this.cantidad= 
+    // }
   },
 };
 </script>
@@ -117,5 +148,8 @@ export default {
   float: right;
   position: absolute;
   right: 10%;
+}
+.control2 {
+  padding-left: 20px;
 }
 </style>

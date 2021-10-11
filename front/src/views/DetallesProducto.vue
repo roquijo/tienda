@@ -3,8 +3,16 @@
     <div id="container">
       <div class="product-details" >
         <font size="6" face="Comic Sans MS,arial,verdana"><strong>{{ producto.nombre }}</strong></font>
-
-        <br /><br />
+        <v-rating
+        v-model="rating"
+        background-color="grey"
+        color="yellow accent-4"
+        dense
+        half-increments
+        hover
+        size="18"
+      ></v-rating>
+        <br />
         <!-- The most important information about the product -->
         <i class="information"
           >{{ producto.especificacion }}
@@ -355,6 +363,7 @@ export default {
       max: 100,
       slider: 100,
       producto: {},
+      rating: 0,
     };
   },
   methods: {

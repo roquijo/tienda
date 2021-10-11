@@ -103,7 +103,9 @@ export default {
         .then((response) => {
           const user = response.data;
           sessionStorage.setItem("usuario", user.usuario);
+          sessionStorage.setItem("id", user.id);
           sessionStorage.setItem("tipoUsuario", user.tipoUsuario);
+          sessionStorage.setItem("sesion", true);
           this.abrirMensaje("Se ha iniciado sesión");
         })
         .catch(() => this.abrirError("Error con el ingreso de usuario"));
@@ -119,10 +121,10 @@ export default {
       this.ConfirShow = true;
     },
     cerrarMensaje() {
-      this.ConfirShow = false;
-      this.$emit("isLogged");
-      this.$router.push("/productos");
-    },
+      this.ConfirShow = false;     
+      this.$router.push({ name: 'Productos'});
+      this.$emit();
+    }, 
     abrirError(mensaje) {
       this.MensajeError = mensaje;
       this.ErrorShow = true;

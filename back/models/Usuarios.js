@@ -6,6 +6,8 @@ const usuariosSchema = mongoose.Schema({
     "apellido": String,
     "usuario": String,
     "correo": String,
+    "celular": Number,
+    "direccion": String,
     "contraseña": String,
     "tipoUsuario": String
 });
