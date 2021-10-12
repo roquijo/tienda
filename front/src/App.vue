@@ -2,13 +2,13 @@
   <!-- Aquí aparecen los compones en la app -->
   <v-app>
     <!-- Aquí se muestra el Nav Bar -->
-    <Navbar></Navbar>
+    <Navbar :key="isLogged"></Navbar>
     <!-- Auí está el contenido principal -->
     <v-main>
       <v-container fluid>
         <!-- Aquí se muestran las vistas -->
         <transition name="slide" mode="out-in">
-          <router-view />
+          <router-view @isLogged="isLogged=true" />
         </transition>
       </v-container>
     </v-main>
@@ -25,8 +25,7 @@ import Navbar from "./components/Navbar.vue";
 export default {
   name: "App",
   data: () => ({
-    
-    //
+    isLogged: false,
   }),
   components: {
     Navbar,

@@ -121,9 +121,9 @@ export default {
       this.ConfirShow = true;
     },
     cerrarMensaje() {
-      this.ConfirShow = false;     
+      this.ConfirShow = false;  
       this.$router.push({ name: 'Productos'});
-      this.$emit();
+      this.$emit("isLogged"); 
     }, 
     abrirError(mensaje) {
       this.MensajeError = mensaje;

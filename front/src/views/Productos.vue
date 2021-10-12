@@ -47,7 +47,19 @@
               <a href="#">{{ producto.nombre }}</a>
             </h3>
             <div class="price">${{ producto.precio }}</div>
-            <a class="add-to-cart" href="">+ Añadir al Carro</a>
+            <a
+              class="add-to-cart"
+              @click="
+                añadirAlCarrito(
+                  producto.id,
+                  producto.nombre,
+                  producto.precio,
+                  producto.foto,
+                  producto.especificacion
+                )
+              "
+              >+ Añadir al Carro</a
+            >
           </div>
           <div v-if="isLogged" class="my-2">
             <v-btn
@@ -79,7 +91,7 @@
           :mensaje="ConfirMensaje"
           :snackbar="ConfirShow"
           :close="cerrarMensaje"
-        ></ConfirMensaje>      
+        ></ConfirMensaje>
         <MensajeError
           :mensaje="MensajeError"
           :snackbar="ErrorShow"
@@ -116,15 +128,15 @@ export default {
       productosCarrito: [],
     };
   },
-  mounted() {
+  created() {
     getAllProductos()
       .then((response) => {
         this.productos = response.data;
-        this.isLogged = sessionStorage.getItem("sesion");       
+        this.isLogged = sessionStorage.getItem("sesion");
       })
-      .catch((error) => console.error(error));     
+      .catch((error) => console.error(error));
   },
-  
+
   methods: {
     editarProducto(id) {
       this.$router.push(`/editarproducto/${id}`);

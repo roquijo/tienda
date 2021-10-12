@@ -22,7 +22,7 @@
                 v-html="'Precio: <h6>$'+ producto.precio+'</h6>'"
               ></v-list-item-subtitle>
               <v-list-item-subtitle
-                v-html="'Total: $'+cantidad"
+                v-html="'Total: $'+(producto.slider*producto.precio)"
               ></v-list-item-subtitle>
               <v-list-item-subtitle
                 v-html="'Detalles : ' + producto.especificacion"
@@ -38,7 +38,7 @@
                 <v-icon color="white"> mdi-close-circle</v-icon>
               </v-chip>
               <v-slider
-                v-model="slider"
+                v-model="producto.slider"
                 class="align-center control2"
                 :max="max"
                 :min="min"
@@ -46,7 +46,7 @@
               >
                 <template v-slot:append>
                   <v-text-field
-                    v-model.number="slider"
+                    v-model.number="producto.slider"
                     class="mt-0 pt-0"
                     hide-details
                     single-line
@@ -89,7 +89,7 @@ export default {
     return {
       min: 1,
       max: 50,
-      cantidad:0,
+      
       ConfirMensaje: "",
       ConfirShow: false,
       MensajeError: "",

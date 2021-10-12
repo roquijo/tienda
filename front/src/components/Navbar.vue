@@ -64,9 +64,10 @@ export default {
   components: {
     Modal,
   },
+  props: ["update"],
   data(){
     return{
-      isLogged:false,
+
     }
   },
   methods: {
@@ -78,8 +79,10 @@ export default {
       window.location.reload();
     },
   },
-  beforeMount () {   
-      this.isLogged = sessionStorage.getItem("sesion");     
+  computed: {
+    isLogged(){
+      return sessionStorage.getItem("sesion") != undefined;
+    }
   },
 };
 </script>
