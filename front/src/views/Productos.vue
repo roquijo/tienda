@@ -162,6 +162,10 @@ export default {
       localStorage.detallesProducto = JSON.stringify(productoDetalle);
     },
     añadirAlCarrito(id, nombre, precio, foto, especificacion) {
+      if (!localStorage.getItem("carritoCompra")) {
+        localStorage.setItem("carritoCompra", JSON.stringify([]));
+      }
+      var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
       var productoCarrito = {
         id: id,
         nombre: nombre,
@@ -170,24 +174,30 @@ export default {
         especificacion: especificacion,
       };
       if (productoCarrito == undefined) {
-        this.abrirError("Error al agregar el producto al carrito");
+        // this.abrirError("Error al agregar el producto al carrito");
+        console.log("Error al agregar el producto al carrito");
       }
-      var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
-
       if (carritoStorage == null) {
         carritoStorage = [];
       }
-
-      // $j(carritoStorage).each(function() {
-      //   if (this.id === id) {
-      //     this.abrirError("El producto está en el carrito");
-      //   }
-      // });
-
-      carritoStorage.push(productoCarrito);
-      localStorage.carritoCompra = JSON.stringify(carritoStorage);
+      if (Object.keys(carritoStorage).length === 0) {
+        carritoStorage.push(productoCarrito);
+        this.abrirMensaje("Se ha añadido el producto al carrito");
+      } else if (Object.keys(carritoStorage).length !== 0) {
+        var validator = true;
+        Object.keys(carritoStorage).forEach((key) => {
+          if (carritoStorage[key].id === id) {
+            validator = false;
+          }
+        });
+        if (validator === true) {
+          carritoStorage.push(productoCarrito);
+          this.abrirMensaje("Se ha añadido el producto al carrito");
+        } else {
+          this.abrirError("El producto ya está en el carrito");
+        }
+      }
       localStorage.setItem("carritoCompra", JSON.stringify(carritoStorage));
-      this.abrirMensaje("Se ha añadido el producto al carrito");
     },
     abrirMensaje(mensaje) {
       this.ConfirMensaje = mensaje;
