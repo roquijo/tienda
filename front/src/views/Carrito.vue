@@ -84,12 +84,10 @@ export default {
     ConfirMensaje,
     MensajeError,
   },
-  props: [],
   data() {
     return {
       min: 1,
       max: 50,
-      
       ConfirMensaje: "",
       ConfirShow: false,
       MensajeError: "",
@@ -135,9 +133,6 @@ export default {
     cerrarError() {
       this.ErrorShow = false;
     },
-    // cantidades(){
-    //   this.cantidad= 
-    // }
   },
 };
 </script>

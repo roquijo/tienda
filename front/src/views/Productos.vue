@@ -173,9 +173,17 @@ export default {
         this.abrirError("Error al agregar el producto al carrito");
       }
       var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
+
       if (carritoStorage == null) {
         carritoStorage = [];
       }
+
+      // $j(carritoStorage).each(function() {
+      //   if (this.id === id) {
+      //     this.abrirError("El producto está en el carrito");
+      //   }
+      // });
+
       carritoStorage.push(productoCarrito);
       localStorage.carritoCompra = JSON.stringify(carritoStorage);
       localStorage.setItem("carritoCompra", JSON.stringify(carritoStorage));
@@ -194,7 +202,6 @@ export default {
     },
     cerrarError() {
       this.ErrorShow = false;
-      // location.reload();
     },
   },
 };
