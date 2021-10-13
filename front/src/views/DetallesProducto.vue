@@ -1,87 +1,101 @@
 <template>
-  <div id="container">
-    <div class="product-details">
-      <font size="6" face="Comic Sans MS,arial,verdana"
-        ><strong>{{ producto.nombre }}</strong></font
-      >
-      <v-rating
-        v-model="rating"
-        background-color="grey"
-        color="yellow accent-4"
-        dense
-        half-increments
-        hover
-        size="18"
-      ></v-rating>
-      <br />
-      <!-- The most important information about the product -->
-      <i class="information">{{ producto.especificacion }} </i>
+  <v-container>
+    <v-btn color="success" absolute fixed fab left to="/productos">
+      <v-icon>mdi-keyboard-backspace</v-icon>
+    </v-btn>
+    <v-card max-width="850" height="400" class="mx-auto my-6">
+      <v-row class="ma-auto" align="center" align-content="center">
+        <v-col cols="12" sm="6" md="6">
+          <v-hover v-slot="{ hover }">
+            <v-img
+            v-if="!noFound"
+              :aspect-ratio="4 / 3"
+              height="360"
+              width="100%"
+              :src="producto.foto"
+              class="ma-auto"
+              ><v-expand-transition>
+                <div
+                  v-if="hover"
+                  class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal text-h2 white--text"
+                  style="height: 100%;"
+                >
+                  ${{ producto.precio }}
+                </div>
+              </v-expand-transition>
+            </v-img>
+          </v-hover>
+          <v-hover v-slot="{ hover }">
+            <v-img
+                v-if="noFound"
+                :aspect-ratio="4 / 3"
+                height="360"
+                width="100%"
+                src="../Images/no_image.jpg"
+                class="ma-auto"
+                ><v-expand-transition>
+                  <div
+                    v-if="hover"
+                    class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal text-h2 white--text"
+                    style="height: 100%;"
+                  >
+                    {{ precio }}
+                  </div>
+                </v-expand-transition>
+              </v-img>
+          </v-hover>
+        </v-col>
 
-      <!-- 		Control -->
-      
-
-      <!-- <div class="control2">
-        <v-subheader>Cantidad:</v-subheader>
-        <v-slider
-          v-model="slider"
-          class="align-center"
-          :max="max"
-          :min="min"
-          hide-details
-        >
-          <template v-slot:append>
-            <v-text-field
-              v-model="slider"
-              class="mt-0 pt-0"
-              hide-details
-              single-line
-              type="number"
-              style="width: 60px"
-            ></v-text-field>
-          </template>
-        </v-slider>
-      </div> -->
-      <div class="control">
-        <!-- Start Button buying -->
-        <button class="btn">
-          <!-- 		the Price -->
-          <span class="price">${{ producto.precio }}</span>
-          <!-- 		shopping cart icon-->
-
-          <!-- 		Buy Now / ADD to Cart-->
-          <span class="buy">COMPRAR YA!!</span>
-        </button>
-        <!-- End Button buying -->
-      </div>
-    </div>
-
-    <!-- 	End	Product details   -->
-
-    <!-- 	Start product image & Information -->
-
-    <div class="product-image">
-      <div id="imagen">
-        <img :src="producto.foto" />
-      </div>
-    </div>
-    <!--  End product image  -->
-    <MensajeError
-          :mensaje="MensajeError"
-          :snackbar="ErrorShow"
-          :close="cerrarError"
-        ></MensajeError>
-  </div>
-  
+        <v-col cols="12" sm="6" md="6">
+          <v-card-title
+            ><h1>{{ producto.nombre }}</h1>
+          </v-card-title>
+          <v-card-title
+          v-if="noFound"
+            ><h1>{{title}}</h1>
+          </v-card-title>
+          <v-card-text>
+            <v-rating
+              v-model="rating"
+              background-color="grey"
+              color="yellow accent-4"
+              dense
+              half-increments
+              hover
+              size="18"
+            ></v-rating>
+            <div class="my-4 text-subtitle-1">
+              {{ producto.especificacion }}
+            </div>
+          </v-card-text>
+          <v-card-title class="justify-center">
+            <v-card-actions class="d-flex">
+              <v-chip v-if="!noFound" color="success" x-large @click="reserve"
+                >COMPRAR YA!! ${{ producto.precio }}
+              </v-chip>
+              <v-chip v-if="noFound" color="success" x-large @click="reserve"
+                >COMPRAR YA!! {{ precio }}
+              </v-chip>
+            </v-card-actions>
+          </v-card-title>
+        </v-col>
+      </v-row>
+      <MensajeError
+        :mensaje="MensajeError"
+        :snackbar="ErrorShow"
+        :close="cerrarError"
+      ></MensajeError>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-
-import {getProducto} from "../services/Productos.Service";
+import { getProducto } from "../services/Productos.Service";
 import MensajeError from "../../src/components/MensajeError.vue";
 
 export default {
   components: {
-      MensajeError,
+    MensajeError,
   },
   data() {
     return {
@@ -92,16 +106,19 @@ export default {
       producto: {},
       MensajeError: "",
       ErrorShow: false,
+      noFound: false,
+      title: "No encontrado",
+      precio: "$0.00"
     };
   },
   methods: {
-    aumentarCantidad() {
-      var e,
-        t = parseInt(document.getElementById("cantidadProductosSlider").value);
-      e = t;
-      var cantidad = document.getElementById("cantidadProductos");
-      cantidad.value = e;
-    },
+    // aumentarCantidad() {
+    //   var e,
+    //     t = parseInt(document.getElementById("cantidadProductosSlider").value);
+    //   e = t;
+    //   var cantidad = document.getElementById("cantidadProductos");
+    //   cantidad.value = e;
+    // },
     abrirError(mensaje) {
       this.MensajeError = mensaje;
       this.ErrorShow = true;
@@ -109,7 +126,7 @@ export default {
     cerrarError() {
       this.ErrorShow = false;
       this.$router.push("/productos");
-    }
+    },
   },
   mounted() {
     const id = this.$route.params.id;
@@ -118,12 +135,12 @@ export default {
         .then((response) => {
           this.producto = response.data;
         })
-        .catch(() =>{
-            this.producto = {}
-            this.abrirError("Producto no encontrado") 
+        .catch(() => {
+          this.producto = {};
+          this.noFound = true;
+          this.abrirError("Producto no encontrado");
         });
-    }
-    else {
+    } else {
       this.producto = JSON.parse(localStorage.getItem("detallesProducto"));
     }
   },
@@ -146,13 +163,22 @@ export default {
     width: 99%;
   }
 
-  /* body {
+  body {
     min-width: 100%;
-  } */
+  }
 
   .rt-container .rt-grid-4 {
     display: none;
   }
+}
+
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 0.9;
+  position: absolute;
+  width: 100%;
 }
 
 /* body {
@@ -162,11 +188,11 @@ export default {
   background-size: cover;
 } */
 
-#imagen {
+/* #imagen {
   position: relative;
-}
+} */
 
-#container {
+/* #container {
   box-shadow: 0 15px 30px 1px rgba(0, 0, 0, 0.883);
   background: rgb(255, 255, 255);
   text-align: center;
@@ -175,10 +201,10 @@ export default {
   margin: 10px auto;
   height: 500px;
   width: 900px;
-}
+} */
 
 /* 	Product details  */
-.product-details {
+/* .product-details {
   position: relative;
   text-align: left;
   overflow: hidden;
@@ -186,7 +212,7 @@ export default {
   height: 100%;
   float: right;
   width: 40%;
-}
+} */
 
 /* 	Product Name */
 /* #container .product-details h1 {
@@ -216,7 +242,7 @@ export default {
 
 /* control */
 
-.control {
+/* .control {
   position: absolute;
   bottom: 25%;
   left: 6%;
@@ -227,10 +253,10 @@ export default {
   bottom: 10%;
   left: 10%;
   width: 275px;
-}
+} */
 
 /* the Button */
-.buy {
+/* .buy {
   background: rgba(45, 156, 48);
   transform: translateY(1px);
   transition: 0.3s linear;
@@ -245,7 +271,7 @@ export default {
   margin: 0;
 }
 
-.control .btn .price {
+.prices {
   background: rgba(45, 156, 48);
   transform: translateY(1px);
   transition: 0.3s linear;
@@ -258,54 +284,53 @@ export default {
   color: rgb(255, 255, 255);
   padding: 0;
   margin: 0;
-}
+} */
 
-.btn:hover {
+/* .btnp:hover {
   transform: translateY(-4px);
   transform: scale(1.2, 1.2);
 }
 
-.btn{
-  margin-left: 50px;
+.btnp {
+  margin-left: 35px;
 }
-.btn span {
+.btnp span {
   font-family: "Farsan", cursive;
   transition: transform 0.3s;
   display: inline-block;
   padding: 10px 20px;
   font-size: 1.2em;
   margin: 0;
-}
+} */
 /* shopping cart icon */
 /* .shopping-cart, */
-.btn .price {
+/* .btnp .prices {
   background: rgb(0, 0, 0);
   border: 0;
   margin: 0;
 }
 
-.btn .price {
+.btnp .prices {
   transform: translateX(-10%);
   padding-right: 15px;
-}
+} */
 
 /* buy */
-.btn .buy {
+/* .btnp .buy {
   z-index: 3;
   font-weight: bolder;
-  
-}
+} */
 
-.btn:hover .price {
+/* .btn:hover .prices {
   transform: translateX(-10%);
-}
+} */
 
 /* .btn:hover .shopping-cart {
   transform: translateX(0%);
 } */
 
 /* product image  */
-.product-image {
+/* .product-image {
   transition: all 0.3s ease-out;
   display: inline-block;
   position: relative;
@@ -313,12 +338,12 @@ export default {
   height: 95%;
   width: 50%;
   padding-top: 50px;
-}
+} */
 
-#container img {
+/* #container img {
   width: 80%;
   height: 80%;
-}
+} */
 
 /* .info {
   background: rgba(27, 26, 26, 0.9);
@@ -350,12 +375,12 @@ export default {
   transform: translateX(50px) scale(1.3);
 } */
 
-.product-image:hover img {
+/* .product-image:hover img {
   transition: all 0.3s ease-out;
 }
 .product-image:hover img {
   transform: scale(1.2, 1.2);
-}
+} */
 
 /* input[type="number"] {
   -webkit-appearance: textfield;

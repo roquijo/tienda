@@ -35,7 +35,12 @@
         </ul>
 
         <form class="d-flex menu">
-          <h5>{{ usuario }}</h5>
+          <div class="mr-3" v-if="isLogged">
+            <h5>¡Bienvenido!</h5>
+          </div>
+          <div v-if="isLogged">
+            <h5>{{ usuario }}</h5>
+          </div>
           <div  v-if="isLogged" class="pt-1 px-3">
             <a href="/perfil"><em class="fa fa-user-circle iconos"></em></a>
           </div>

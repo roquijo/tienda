@@ -137,7 +137,7 @@ export default {
       .catch((error) => {
         console.error(error);
         this.abrirError("Error al eliminar el producto");
-        });
+      });
   },
 
   methods: {
