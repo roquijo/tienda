@@ -18,8 +18,8 @@
                   <p class="text-muted font-size-sm">
                     Bay Area, San Francisco, CA
                   </p>
-                  <button class="btn btn-primary mr-2">Seguir</button>
-                  <button class="btn btn-outline-primary">Mensaje</button>
+                  <!-- <button class="btn btn-primary mr-2">Seguir</button>
+                  <button class="btn btn-outline-primary">Mensaje</button> -->
                 </div>
               </div>
             </div>
@@ -30,14 +30,25 @@
             <div class="card-body col-md-12">
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Nombre Completo</h6>
+                  <h6 class="mb-0">Nombre</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   <input
                     type="text"
                     class="form-control"
-                    v-model="nombreCompleto"
-                    placeholder="Alias"
+                    v-model="nombre"
+                    placeholder="nombre"
+                  />
+                </div>
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Apellidos</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="apellido"
+                    placeholder="apellido"
                   />
                 </div>
               </div>
@@ -94,11 +105,13 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9 text-secondary">
-                  <button class="btn btn-primary px-4"
+                <div class="col-sm-9 text-secondary text-center">
+                  <button class="btn btn-primary px-4 mr-4"
                   @click="actualizar()"
                   >Guardar Cambios</button>
+                  <button class="btn btn-secondary px-4"
+                  @click="cancelar()"
+                  >Cancelar</button>
                 </div>
               </div>
             </div>
@@ -131,58 +144,47 @@ export default {
     MensajeError,
   },
   data() {
-    return {
-      title: String,
-      nombre: String,
-      apellido: String,
-      usuario: String,
-      correo: String,
-      celular: Number,
-      direccion: String,
-      nombreCompleto: String,
+    return {  
+      nombre: "",
+      apellido: "",
+      usuario: "",
+      correo: "",
+      celular: 0,
+      direccion: "", 
+      ConfirMensaje: "",
+      ConfirShow: false,
+      MensajeError: "",
+      ErrorShow: false, 
     };
   },
   mounted() {
-    const id = sessionStorage.getItem("id");
-    if (id != undefined) {
-      getUsuario(id)
+    const usuarioStorage = sessionStorage.getItem("usuario");
+    if (usuarioStorage != undefined) {
+      getUsuario(usuarioStorage)
         .then((response) => {
           const usuario = response.data;
-          this.id = usuario.id;
           this.nombre = usuario.nombre;
           this.apellido = usuario.apellido;
           this.usuario = usuario.usuario;
           this.correo = usuario.correo;
           this.celular = usuario.celular;
           this.direccion = usuario.direccion;
-          this.nombreCompleto = usuario.nombre + " " + usuario.apellido;
         })
         .catch(() => this.abrirError("Datos no encontrados"));
     }
   },
   methods: {
-    actualizar() {
-      if (
-        this.id == undefined ||
-        this.id == "" ||
-        this.nombre == undefined ||
-        this.nombre == ""
-      ) {
-        this.abrirError("Ingrese los campos requeridos");
-        return;
-      }
-      const usuario = {
-        id: this.id,
+    actualizar() {      
+      const usuarioUpdate = {
         nombre: this.nombre,
         apellido: this.apellido,
-        usuario: this.usuario,
         correo: this.correo,
         celular: this.celular,
         direccion: this.direccion,
       };
-      updateUsuario(this.id, usuario)
+      updateUsuario(this.usuario, usuarioUpdate)
         .then(() =>
-          this.abrirMensaje("Se ha actualizado el Usuario: " + this.id)
+          this.abrirMensaje("Se ha actualizado el Usuario: " + this.usuario)
         )
         .catch(() => this.abrirError("Error al actualizar el Usuario"));
     },
@@ -205,7 +207,7 @@ export default {
       this.$refs.form.reset();
     },
     cancelar() {
-      this.$router.push("/perfil");
+      this.$router.push("/productos");
     }
   },
 };

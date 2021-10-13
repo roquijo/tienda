@@ -65,8 +65,70 @@
       </div>
     </div>
     <!--  End product image  -->
+    <MensajeError
+          :mensaje="MensajeError"
+          :snackbar="ErrorShow"
+          :close="cerrarError"
+        ></MensajeError>
   </div>
+  
 </template>
+
+<script>
+
+import {getProducto} from "../services/Productos.Service";
+import MensajeError from "../../src/components/MensajeError.vue";
+
+export default {
+  components: {
+      MensajeError,
+  },
+  data() {
+    return {
+      min: 0,
+      max: 100,
+      slider: 100,
+      rating: 0,
+      producto: {},
+      MensajeError: "",
+      ErrorShow: false,
+    };
+  },
+  methods: {
+    aumentarCantidad() {
+      var e,
+        t = parseInt(document.getElementById("cantidadProductosSlider").value);
+      e = t;
+      var cantidad = document.getElementById("cantidadProductos");
+      cantidad.value = e;
+    },
+    abrirError(mensaje) {
+      this.MensajeError = mensaje;
+      this.ErrorShow = true;
+    },
+    cerrarError() {
+      this.ErrorShow = false;
+      this.$router.push("/productos");
+    }
+  },
+  mounted() {
+    const id = this.$route.params.id;
+    if (id != undefined) {
+      getProducto(id)
+        .then((response) => {
+          this.producto = response.data;
+        })
+        .catch(() =>{
+            this.producto = {}
+            this.abrirError("Producto no encontrado") 
+        });
+    }
+    else {
+      this.producto = JSON.parse(localStorage.getItem("detallesProducto"));
+    }
+  },
+};
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Abel|Aguafina+Script|Artifika|Athiti|Condiment|Dosis|Droid+Serif|Farsan|Gurajada|Josefin+Sans|Lato|Lora|Merriweather|Noto+Serif|Open+Sans+Condensed:300|Playfair+Display|Rasa|Sahitya|Share+Tech|Text+Me+One|Titillium+Web");
@@ -183,7 +245,7 @@
   margin: 0;
 }
 
-.price {
+.control .btn .price {
   background: rgba(45, 156, 48);
   transform: translateY(1px);
   transition: 0.3s linear;
@@ -356,30 +418,3 @@ input[type="number"]::-webkit-outer-spin-button {
   text-align: center;
 } */
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      min: 0,
-      max: 100,
-      slider: 100,
-      producto: {},
-      rating: 0,
-    };
-  },
-  methods: {
-    aumentarCantidad() {
-      var e,
-        t = parseInt(document.getElementById("cantidadProductosSlider").value);
-      e = t;
-      var cantidad = document.getElementById("cantidadProductos");
-      cantidad.value = e;
-    },
-  },
-  mounted() {
-    this.producto = JSON.parse(localStorage.getItem("detallesProducto"));
-    console.log(this.producto);
-  },
-};
-</script>

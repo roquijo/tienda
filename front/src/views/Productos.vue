@@ -134,7 +134,10 @@ export default {
         this.productos = response.data;
         this.isLogged = sessionStorage.getItem("sesion");
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        this.abrirError("Error al eliminar el producto");
+        });
   },
 
   methods: {

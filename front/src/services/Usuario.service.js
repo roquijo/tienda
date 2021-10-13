@@ -15,13 +15,14 @@ const validateUser = (usuario, contraseña) => {
 
 const getAllUsuario = () => httpClient.get(END_POINT); 
 
-const getUsuario = (id) => httpClient.get(END_POINT + "/" + id);
+const getUsuario = (usuario) => httpClient.get(END_POINT + "/" + usuario);
 
 const insertUsuario = (usuario) => httpClient.post(END_POINT, usuario); 
 
-const updateUsuario = (id, usuario) => httpClient.put(END_POINT + "/" + id, usuario); 
+const updateUsuario = (usuario, usuarioUpdate) => httpClient.put(END_POINT + "/" + usuario, usuarioUpdate);
 
-const deleteUsuario = (id) => httpClient.delete(END_POINT + "/" + id);
+
+const deleteUsuario = (usuario) => httpClient.delete(END_POINT + "/" + usuario);
 
 export{
     validateUser,

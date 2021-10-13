@@ -35,7 +35,7 @@
         </ul>
 
         <form class="d-flex menu">
-          <!-- <h5>{{ usuario }}</h5> -->
+          <h5>{{ usuario }}</h5>
           <div  v-if="isLogged" class="pt-1 px-3">
             <a href="/perfil"><em class="fa fa-user-circle iconos"></em></a>
           </div>
@@ -48,8 +48,9 @@
             type="search"
             placeholder="Buscar producto"
             aria-label="Buscar"
+            v-model="id"
           />
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
+          <button class="btn btn-outline-success" @click="buscar()">Buscar</button>
         </form>
       </div>
     </div>
@@ -60,24 +61,24 @@
 import Modal from "./Modal.vue";
 
 export default {
-  // props: ["usuario", "sesion"],
   components: {
     Modal,
   },
-  props: ["update"],
   data(){
     return{
-
+      id:null,
+      usuario: sessionStorage.getItem("usuario")
     }
   },
   methods: {
     cerrarSesion() {
       sessionStorage.removeItem("usuario");
-      sessionStorage.removeItem("tipoUsuario");
-      sessionStorage.removeItem("id");
       sessionStorage.removeItem("sesion");
       window.location.reload();
     },
+    buscar(){
+      this.$router.push(`/busqueda/${this.id}`);
+    }
   },
   computed: {
     isLogged(){

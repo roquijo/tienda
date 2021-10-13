@@ -7,10 +7,10 @@ const routes = express.Router();
 
 // Rutas de usuarios
 routes.get("/usuarios", usuarioController.getAll);
-routes.get("/usuarios/:id", usuarioController.getById);
+routes.get("/usuarios/:usuario", usuarioController.getByUser);
 routes.post("/usuarios/", usuarioController.insert);
-routes.put("/usuarios/:id", usuarioController.update);
-routes.delete("/usuarios/:id", usuarioController.delete);
+routes.put("/usuarios/:usuario", usuarioController.update);
+routes.delete("/usuarios/:usuario", usuarioController.delete);
 routes.post("/validarUsuario", usuarioController.validarUsuario);
 
 

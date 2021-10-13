@@ -167,7 +167,7 @@ export default {
       };
       insertProducto(producto)
         .then((response) =>
-          this.abrirMensaje("Se ha agreado el producto: " + response.data.id)
+          this.abrirMensaje("Se ha agregado el producto: " + response.data.id)
         )
         .catch(() => this.abrirError("Error al guardar el producto"));
     },

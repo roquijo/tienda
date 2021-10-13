@@ -103,8 +103,6 @@ export default {
         .then((response) => {
           const user = response.data;
           sessionStorage.setItem("usuario", user.usuario);
-          sessionStorage.setItem("id", user.id);
-          sessionStorage.setItem("tipoUsuario", user.tipoUsuario);
           sessionStorage.setItem("sesion", true);
           this.abrirMensaje("Se ha iniciado sesión");
         })

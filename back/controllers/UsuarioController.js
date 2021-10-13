@@ -11,12 +11,12 @@ module.exports = class UsuarioController {
         }
     }
 
-    static async getById(req, res) {
-        const id = req.params.id;
+    static async getByUser(req, res) {
+        const usuario = req.params.usuario;
         try {
-            const usuario = await usuarioModel.findOne({"id":id});
-            if (usuario != null) {
-                res.status(200).json(usuario);
+            const user = await usuarioModel.findOne({"usuario":usuario});
+            if (user != null) {
+                res.status(200).json(user);
             } else {
                 res.status(404).json();
             }
@@ -28,10 +28,9 @@ module.exports = class UsuarioController {
 
     static async insert(req, res) {
         try {
-            let usuario = req.body;
-            usuario = await usuarioModel.create(usuario);
-            usuario.contraseña = undefined;
-            res.status(201).json(nuevocliente);
+            const usuario = req.body;
+            const nuevoUsuario = await usuarioModel.create(usuario);
+            res.status(201).json(nuevoUsuario);
         } catch (err) {
             res.status(400).json({ "mensaje": err.mensaje });
         }
@@ -58,9 +57,9 @@ module.exports = class UsuarioController {
 
     static async update(req, res) {
         try {
-            const id = req.params.id;
-            const usuario = req.body;
-            const actualizarUsuario = await usuarioModel.updateOne({"id":id},usuario);
+            const usuario = req.params.usuario;
+            const usuarioUpdate = req.body;
+            const actualizarUsuario = await usuarioModel.updateOne({"usuario":usuario},usuarioUpdate);
             res.status(200).json(actualizarUsuario);
         } catch (err) {
             res.status(400).json({ mensaje: err.mensaje });

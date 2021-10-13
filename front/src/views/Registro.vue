@@ -89,11 +89,7 @@
         </v-row>
         <v-row class="mt-auto justify-center">
           <v-col cols="12" sm="6" md="2">
-            <v-btn                         
-              color="success"
-              class="mr-4"
-              @click="validate()"
-            >
+            <v-btn color="success" class="mr-4" @click="validate()">
               Confirmar
             </v-btn>
           </v-col>
@@ -108,16 +104,16 @@
             </v-btn>
           </v-col>
           <ConfirMensaje
-          :mensaje="ConfirMensaje"
-          :snackbar="ConfirShow"
-          :close="cerrarMensaje"
-        ></ConfirMensaje>
-        <MensajeError
-          :mensaje="MensajeError"
-          :snackbar="ErrorShow"
-          :close="cerrarError"
-        ></MensajeError>
-          </v-row>
+            :mensaje="ConfirMensaje"
+            :snackbar="ConfirShow"
+            :close="cerrarMensaje"
+          ></ConfirMensaje>
+          <MensajeError
+            :mensaje="MensajeError"
+            :snackbar="ErrorShow"
+            :close="cerrarError"
+          ></MensajeError>
+        </v-row>
       </v-card>
     </v-container>
   </v-container>
@@ -132,8 +128,8 @@ export default {
     ConfirMensaje,
     MensajeError,
   },
-  data: () => ({
-    valid: true,
+  data(){
+    return{
     nombre: "",
     nameRules: [
       (v) => !!v || "Nombre es requerido",
@@ -142,8 +138,7 @@ export default {
     apellido: "",
     lastnameRules: [
       (v) => !!v || "Apellido es requerido",
-      (v) =>
-        (v && v.length <= 40) || "Apellido debe ser menor que 40 caractares",
+      (v) => (v && v.length <= 40) || "Apellido debe ser menor que 40 caractares",
     ],
     usuario: "",
     nicknameRules: [
@@ -158,17 +153,17 @@ export default {
     contraseña: "",
     confirPass: "",
     rules: {
-      required1: (value) => !!value || "Requerido.",
-      required2: (value) => !!value || "Requerido.",
       min: (v) => v.length >= 8 || "Mínimo 8 caracteres",
-    },
-  }),
-
+    }, 
+    ConfirMensaje: "",
+    ConfirShow: false,
+    MensajeError: "",
+    ErrorShow: false, 
+    }    
+  },
   methods: {
     validate() {
-      if (
-        this.id == undefined ||
-        this.id == "" ||
+      if (       
         this.nombre == undefined ||
         this.nombre == "" ||
         this.apellido == undefined ||
@@ -178,25 +173,22 @@ export default {
         this.correo == undefined ||
         this.correo == "" ||
         this.contraseña == undefined ||
-        this.contraseña == ""    
+        this.contraseña == ""
       ) {
         this.abrirError("Ingrese los campos requeridos");
         return;
       }
-      const producto = {
-        id: this.id,
+      const usuario = {
         nombre: this.nombre,
         apellido: this.apellido,
         usuario: this.usuario,
         correo: this.correo,
-        contraseña: this.contraseña,
+        contraseña: this.contraseña,  
       };
-      insertUsuario(producto)
+      insertUsuario(usuario)
         .then((response) =>
-          this.abrirMensaje(
-            "Se ha agreado el usuario: " + response.data.usuario
+          this.abrirMensaje("Se ha agregado el usuario: " + response.data.usuario)
           )
-        )
         .catch(() => this.abrirError("Error al guardar el usuario"));
     },
     reset() {
@@ -216,7 +208,7 @@ export default {
     },
     cerrarMensaje() {
       this.ConfirShow = false;
-      this.$router.push({ name: 'Perfil'});
+      this.$router.push({ name: "Ingreso" });
     },
     abrirError(mensaje) {
       this.MensajeError = mensaje;

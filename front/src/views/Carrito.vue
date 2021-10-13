@@ -1,80 +1,103 @@
 <template>
-  <v-card max-width="650" class="ml-6">
-    <v-list>
-      <v-subheader v-show="vacio"
-        ><h4>Carrito de Compras: VACÍO!!</h4></v-subheader
-      >
-
-      <v-subheader v-show="!vacio"><h5>Carrito de Compras</h5></v-subheader>
-
-      <template v-for="producto in listaProductos">
-        <v-list-item :key="producto.id">
-          <v-list-item-avatar size="100">
-            <v-img :src="producto.foto"></v-img>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-group>
-              <v-list-item-title
-                v-html="'Nombre: ' + producto.nombre"
-                class="my-2"
-              ></v-list-item-title>
-              <v-list-item-subtitle
-                v-html="'Precio: <h6>$'+ producto.precio+'</h6>'"
-              ></v-list-item-subtitle>
-              <v-list-item-subtitle
-                v-html="'Total: $'+(producto.slider*producto.precio)"
-              ></v-list-item-subtitle>
-              <v-list-item-subtitle
-                v-html="'Detalles : ' + producto.especificacion"
-                class="my-2"
-              ></v-list-item-subtitle>
-            </v-list-item-group>
-            <div>
-              <v-chip
-                class="chipR"
-                color="red"
-                @click="eliminarItem(producto.id)"
-              >
-                <v-icon color="white"> mdi-close-circle</v-icon>
-              </v-chip>
-              <v-slider
-                v-model="producto.slider"
-                class="align-center control2"
-                :max="max"
-                :min="min"
-                hide-details
-              >
-                <template v-slot:append>
-                  <v-text-field
-                    v-model.number="producto.slider"
-                    class="mt-0 pt-0"
+  <v-row>
+    <v-col>
+      <v-card max-width="650" class="ml-6" elevation="15">
+        <v-list>
+          <v-subheader v-show="vacio"
+            ><h4>Carrito de Compras: VACÍO!!</h4></v-subheader
+          >
+          <v-subheader v-show="!vacio"><h5>Carrito de Compras</h5></v-subheader>
+          <template v-for="producto in listaProductos">
+            <v-list-item :key="producto.id">
+              <v-list-item-avatar size="100">
+                <v-img :src="producto.foto"></v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-group>
+                  <v-list-item-title
+                    v-html="'Nombre: ' + producto.nombre"
+                    class="my-2"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle
+                    v-html="'Precio: <h6>$' + producto.precio + '</h6>'"
+                  ></v-list-item-subtitle>
+                  <v-list-item-subtitle
+                    v-html="'Total: $' + producto.slider * producto.precio"
+                  ></v-list-item-subtitle>
+                  <v-list-item-subtitle
+                    v-html="'Detalles : ' + producto.especificacion"
+                    class="my-2"
+                  ></v-list-item-subtitle>
+                </v-list-item-group>
+                <div>
+                  <v-chip
+                    class="chipR"
+                    color="red"
+                    @click="eliminarItem(producto.id)"
+                  >
+                    <v-icon color="white"> mdi-close-circle</v-icon>
+                  </v-chip>
+                  <v-slider
+                    v-model="producto.slider"
+                    class="align-center control2"
+                    :max="max"
+                    :min="min"
                     hide-details
-                    single-line
-                    solo
-                    type="number"
-                    style="width: 60px"
-                    max="50"
-                    min="1"
-                  ></v-text-field>
-                </template>
-              </v-slider>
+                  >
+                    <template v-slot:append>
+                      <v-text-field
+                        v-model.number="producto.slider"
+                        class="mt-0 pt-0"
+                        hide-details
+                        single-line
+                        solo
+                        type="number"
+                        style="width: 60px"
+                        max="50"
+                        min="1"
+                      ></v-text-field>
+                    </template>
+                  </v-slider>
+                </div>
+                <v-divider></v-divider>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </v-list>
+        <ConfirMensaje
+          :mensaje="ConfirMensaje"
+          :snackbar="ConfirShow"
+          :close="cerrarMensaje"
+        ></ConfirMensaje>
+        <MensajeError
+          :mensaje="MensajeError"
+          :snackbar="ErrorShow"
+          :close="cerrarError"
+        ></MensajeError>
+      </v-card>
+    </v-col>
+    <v-col>
+      <v-card elevation="15">
+        <v-container>
+          <div class="totals">
+            <div class="totals-item">
+              <label>SubTotal de todos los Productos:</label>
+              <div class="totals-value" id="cart-subtotal">71.97</div>
             </div>
-            <v-divider></v-divider>
-          </v-list-item-content>
-        </v-list-item>
-      </template>
-    </v-list>
-    <ConfirMensaje
-      :mensaje="ConfirMensaje"
-      :snackbar="ConfirShow"
-      :close="cerrarMensaje"
-    ></ConfirMensaje>
-    <MensajeError
-      :mensaje="MensajeError"
-      :snackbar="ErrorShow"
-      :close="cerrarError"
-    ></MensajeError>
-  </v-card>
+            <div class="totals-item">
+              <label>Envio:</label>
+              <div class="totals-value" id="cart-shipping">3.60</div>
+            </div>
+            <div class="totals-item">
+              <label>Total a Pagar:</label>
+              <div class="totals-value" id="cart-total">15.00</div>
+            </div>
+            <button class="checkout">REALIZAR PEDIDO!!</button>
+          </div>
+        </v-container>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -148,6 +171,35 @@ export default {
 .control2 {
   padding-left: 20px;
   padding-right: 40%;
+}
 
+.totals {
+  clear: both;
+  width: 90%;
+  text-align: right;
+}
+
+.totals-item {
+  margin-bottom: 10px;
+}
+
+label {
+  float: left;
+  width: 70%;
+}
+
+.checkout {
+  float: right;
+  border: 0;
+  margin-top: 20px;
+  padding: 6px 25px;
+  background-color: #6b6;
+  color: #fff;
+  font-size: 25px;
+  border-radius: 3px;
+}
+
+.checkout:hover {
+  background-color: #494;
 }
 </style>
