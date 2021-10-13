@@ -1,9 +1,10 @@
 <template>
-  <v-app>
-    <div id="container">
-      <div class="product-details" >
-        <font size="6" face="Comic Sans MS,arial,verdana"><strong>{{ producto.nombre }}</strong></font>
-        <v-rating
+  <div id="container">
+    <div class="product-details">
+      <font size="6" face="Comic Sans MS,arial,verdana"
+        ><strong>{{ producto.nombre }}</strong></font
+      >
+      <v-rating
         v-model="rating"
         background-color="grey"
         color="yellow accent-4"
@@ -12,63 +13,59 @@
         hover
         size="18"
       ></v-rating>
-        <br />
-        <!-- The most important information about the product -->
-        <i class="information"
-          >{{ producto.especificacion }}
-        </i>
+      <br />
+      <!-- The most important information about the product -->
+      <i class="information">{{ producto.especificacion }} </i>
 
-        <!-- 		Control -->
-        <div class="control">
-          <!-- Start Button buying -->
-          <button class="btn">
-            <!-- 		the Price -->
-            <span class="price">${{ producto.precio }}</span>
-            <!-- 		shopping cart icon-->
+      <!-- 		Control -->
+      
 
-            <!-- 		Buy Now / ADD to Cart-->
-            <span class="buy">COMPRAR YA!!</span>
-          </button>
-          <!-- End Button buying -->
-        </div>
+      <!-- <div class="control2">
+        <v-subheader>Cantidad:</v-subheader>
+        <v-slider
+          v-model="slider"
+          class="align-center"
+          :max="max"
+          :min="min"
+          hide-details
+        >
+          <template v-slot:append>
+            <v-text-field
+              v-model="slider"
+              class="mt-0 pt-0"
+              hide-details
+              single-line
+              type="number"
+              style="width: 60px"
+            ></v-text-field>
+          </template>
+        </v-slider>
+      </div> -->
+      <div class="control">
+        <!-- Start Button buying -->
+        <button class="btn">
+          <!-- 		the Price -->
+          <span class="price">${{ producto.precio }}</span>
+          <!-- 		shopping cart icon-->
 
-        <div class="control2">
-          <v-subheader>Cantidad:</v-subheader>
-          <v-slider
-            v-model="slider"
-            class="align-center"
-            :max="max"
-            :min="min"
-            hide-details
-          >
-            <template v-slot:append>
-              <v-text-field
-                v-model="slider"
-                class="mt-0 pt-0"
-                hide-details
-                single-line
-                type="number"
-                style="width: 60px"
-              ></v-text-field>
-            </template>
-          </v-slider>
-        </div>
+          <!-- 		Buy Now / ADD to Cart-->
+          <span class="buy">COMPRAR YA!!</span>
+        </button>
+        <!-- End Button buying -->
       </div>
-
-      <!-- 	End	Product details   -->
-
-      <!-- 	Start product image & Information -->
-
-      <div class="product-image">
-        <div id="imagen">
-        <img
-          :src="producto.foto"
-        />
-        </div>
-      </div>
-      <!--  End product image  -->
     </div>
-  </v-app>
+
+    <!-- 	End	Product details   -->
+
+    <!-- 	Start product image & Information -->
+
+    <div class="product-image">
+      <div id="imagen">
+        <img :src="producto.foto" />
+      </div>
+    </div>
+    <!--  End product image  -->
+  </div>
 </template>
 
 <style>
@@ -87,34 +84,34 @@
     width: 99%;
   }
 
-  body {
+  /* body {
     min-width: 100%;
-  }
+  } */
 
   .rt-container .rt-grid-4 {
     display: none;
   }
 }
 
-body {
+/* body {
   background: #eeebeb;
   background-image: linear-gradient(135deg, #ffffff 10%, #000000 100%);
   background-attachment: fixed;
   background-size: cover;
-}
+} */
 
-#imagen{
+#imagen {
   position: relative;
 }
 
 #container {
   box-shadow: 0 15px 30px 1px rgba(0, 0, 0, 0.883);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgb(255, 255, 255);
   text-align: center;
   border-radius: 5px;
   overflow: hidden;
-  margin: 5em auto;
-  height: 550px;
+  margin: 10px auto;
+  height: 500px;
   width: 900px;
 }
 
@@ -125,35 +122,35 @@ body {
   overflow: hidden;
   padding: 30px;
   height: 100%;
-  float: left;
+  float: right;
   width: 40%;
 }
 
 /* 	Product Name */
-#container .product-details h1 {
+/* #container .product-details h1 {
   font-family: "Old Standard TT", serif;
   display: inline-block;
   position: relative;
   font-size: 34px;
   color: #005eff;
   margin: 0;
-}
+} */
 
 /*Product Rating  */
-.hint-star {
+/* .hint-star {
   display: inline-block;
   margin-left: 0.5em;
   color: gold;
   width: 50%;
-}
+} */
 
 /* The most important information about the product */
-#container .product-details > p {
+/* #container .product-details > p {
   font-family: "Farsan", cursive;
   text-align: center;
   font-size: 20px;
   color: #ff0000;
-}
+} */
 
 /* control */
 
@@ -203,8 +200,12 @@ body {
 
 .btn:hover {
   transform: translateY(-4px);
+  transform: scale(1.2, 1.2);
 }
 
+.btn{
+  margin-left: 50px;
+}
 .btn span {
   font-family: "Farsan", cursive;
   transition: transform 0.3s;
@@ -214,8 +215,8 @@ body {
   margin: 0;
 }
 /* shopping cart icon */
-.btn .price,
-.shopping-cart {
+/* .shopping-cart, */
+.btn .price {
   background: rgb(0, 0, 0);
   border: 0;
   margin: 0;
@@ -230,15 +231,16 @@ body {
 .btn .buy {
   z-index: 3;
   font-weight: bolder;
+  
 }
 
 .btn:hover .price {
-  transform: translateX(-110%);
+  transform: translateX(-10%);
 }
 
-.btn:hover .shopping-cart {
+/* .btn:hover .shopping-cart {
   transform: translateX(0%);
-}
+} */
 
 /* product image  */
 .product-image {
@@ -246,17 +248,17 @@ body {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  height: 100%;
-  width: 56%;
-  display: inline-block;
+  height: 95%;
+  width: 50%;
+  padding-top: 50px;
 }
 
 #container img {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
 }
 
-.info {
+/* .info {
   background: rgba(27, 26, 26, 0.9);
   font-family: "Farsan", cursive;
   transition: all 0.3s ease-out;
@@ -270,21 +272,21 @@ body {
   width: 100%;
   left: 100;
   top: 0;
-}
+} */
 
-.info h2 {
+/* .info h2 {
   text-align: center;
-}
-.product-image:hover .info {
+} */
+/* .product-image:hover .info {
   transform: translateX(0);
-}
+} */
 
-.info ul li {
+/* .info ul li {
   transition: 0.3s ease;
 }
 .info ul li:hover {
   transform: translateX(50px) scale(1.3);
-}
+} */
 
 .product-image:hover img {
   transition: all 0.3s ease-out;
@@ -293,7 +295,7 @@ body {
   transform: scale(1.2, 1.2);
 }
 
-input[type="number"] {
+/* input[type="number"] {
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
   appearance: textfield;
@@ -302,9 +304,9 @@ input[type="number"] {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
-}
+} */
 
-.number-input {
+/* .number-input {
   border: 1px solid rgb(206, 206, 206);
   display: inline-flex;
 }
@@ -352,7 +354,7 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 1.5rem;
   font-weight: bold;
   text-align: center;
-}
+} */
 </style>
 
 <script>
@@ -375,8 +377,8 @@ export default {
       cantidad.value = e;
     },
   },
-  mounted() {   
-    this.producto = JSON.parse(localStorage.getItem('detallesProducto'))
+  mounted() {
+    this.producto = JSON.parse(localStorage.getItem("detallesProducto"));
     console.log(this.producto);
   },
 };

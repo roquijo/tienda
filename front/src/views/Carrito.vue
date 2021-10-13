@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="450" class="mx-auto">
+  <v-card max-width="650" class="ml-6">
     <v-list>
       <v-subheader v-show="vacio"
         ><h4>Carrito de Compras: VACÍO!!</h4></v-subheader
@@ -50,8 +50,9 @@
                     class="mt-0 pt-0"
                     hide-details
                     single-line
+                    solo
                     type="number"
-                    style="width: 50px"
+                    style="width: 60px"
                     max="50"
                     min="1"
                   ></v-text-field>
@@ -146,5 +147,7 @@ export default {
 }
 .control2 {
   padding-left: 20px;
+  padding-right: 40%;
+
 }
 </style>

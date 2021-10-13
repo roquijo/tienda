@@ -1,11 +1,5 @@
 <template>
-  <v-form
-    method="post"
-    action="/Ingreso"
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
+  <v-container>
     <v-container>
       <v-card elevation="15">
         <v-row class="mt-4 mx-auto">
@@ -14,7 +8,7 @@
           </legend>
           <v-col cols="12" sm="6" md="6">
             <v-text-field
-              v-model="name"
+              v-model="nombre"
               append-icon="mdi-form-textbox"
               :counter="40"
               :rules="nameRules"
@@ -24,7 +18,7 @@
               required
             ></v-text-field>
             <v-text-field
-              v-model="lastname"
+              v-model="apellido"
               append-icon="mdi-form-textbox"
               :counter="40"
               :rules="lastnameRules"
@@ -34,7 +28,7 @@
               required
             ></v-text-field>
             <v-text-field
-              v-model="nickname"
+              v-model="usuario"
               append-icon="mdi-account"
               :rules="nicknameRules"
               label="Nickname"
@@ -52,7 +46,7 @@
           </v-col>
           <v-col cols="12" sm="6" md="6">
             <v-text-field
-              v-model="email"
+              v-model="correo"
               append-icon="mdi-email"
               :rules="emailRules"
               label="E-mail"
@@ -61,7 +55,7 @@
               required
             ></v-text-field>
             <v-text-field
-              v-model="password"
+              v-model="contraseña"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required1, rules.min]"
               :type="show1 ? 'text' : 'password'"
@@ -95,12 +89,10 @@
         </v-row>
         <v-row class="mt-auto justify-center">
           <v-col cols="12" sm="6" md="2">
-            <v-btn
-              :disabled="!valid"
-              type="submit"
+            <v-btn                         
               color="success"
               class="mr-4"
-              @click="validate"
+              @click="validate()"
             >
               Confirmar
             </v-btn>
@@ -114,39 +106,56 @@
             <v-btn color="warning" @click="resetValidation">
               Limpiar Validación
             </v-btn>
-          </v-col></v-row
-        >
+          </v-col>
+          <ConfirMensaje
+          :mensaje="ConfirMensaje"
+          :snackbar="ConfirShow"
+          :close="cerrarMensaje"
+        ></ConfirMensaje>
+        <MensajeError
+          :mensaje="MensajeError"
+          :snackbar="ErrorShow"
+          :close="cerrarError"
+        ></MensajeError>
+          </v-row>
       </v-card>
     </v-container>
-  </v-form>
+  </v-container>
 </template>
 
 <script>
 import { insertUsuario } from "../../src/services/Usuario.Service";
-
+import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
+import MensajeError from "../../src/components/MensajeError.vue";
 export default {
+  components: {
+    ConfirMensaje,
+    MensajeError,
+  },
   data: () => ({
     valid: true,
-    name: "",
+    nombre: "",
     nameRules: [
       (v) => !!v || "Nombre es requerido",
       (v) => (v && v.length <= 40) || "Nombre debe ser menor que 40 caractares",
     ],
-    lastname: "",
+    apellido: "",
     lastnameRules: [
       (v) => !!v || "Apellido es requerido",
       (v) =>
         (v && v.length <= 40) || "Apellido debe ser menor que 40 caractares",
     ],
-    nickname: "",
-    nicknameRules: [(v) => !!v || "Nickname es requerido"],
-    email: "",
+    usuario: "",
+    nicknameRules: [
+      (v) => !!v || "Nickname es requerido"
+    ],
+    correo: "",
     emailRules: [
       (v) => !!v || "E-mail es requerido",
       (v) => /.+@.+\..+/.test(v) || "E-mail debe ser válido",
     ],
     show1: false,
-    password: "",
+    contraseña: "",
     confirPass: "",
     rules: {
       required1: (value) => !!value || "Requerido.",
@@ -157,14 +166,19 @@ export default {
 
   methods: {
     validate() {
-      this.$refs.form.validate();
       if (
         this.id == undefined ||
         this.id == "" ||
         this.nombre == undefined ||
         this.nombre == "" ||
-        this.precio == undefined ||
-        this.precio == ""
+        this.apellido == undefined ||
+        this.apellido == "" ||
+        this.usuario == undefined ||
+        this.usuario == "" ||
+        this.correo == undefined ||
+        this.correo == "" ||
+        this.contraseña == undefined ||
+        this.contraseña == ""    
       ) {
         this.abrirError("Ingrese los campos requeridos");
         return;
@@ -172,16 +186,18 @@ export default {
       const producto = {
         id: this.id,
         nombre: this.nombre,
-        precio: this.precio,
-        foto: this.foto,
-        especificacion: this.especificacion,
+        apellido: this.apellido,
+        usuario: this.usuario,
+        correo: this.correo,
+        contraseña: this.contraseña,
       };
       insertUsuario(producto)
         .then((response) =>
-          this.abrirMensaje("Se ha agreado el producto: " + response.data.id)
+          this.abrirMensaje(
+            "Se ha agreado el usuario: " + response.data.usuario
+          )
         )
-        .catch(() => this.abrirError("Error al guardar el producto"));
-    
+        .catch(() => this.abrirError("Error al guardar el usuario"));
     },
     reset() {
       this.$refs.form.reset();
@@ -191,7 +207,23 @@ export default {
     },
     passConfirmation() {
       return () =>
-        this.password === this.confirPass || "Las contraseñas deben coincidir";
+        this.contraseña === this.confirPass ||
+        "Las contraseñas deben coincidir";
+    },
+    abrirMensaje(mensaje) {
+      this.ConfirMensaje = mensaje;
+      this.ConfirShow = true;
+    },
+    cerrarMensaje() {
+      this.ConfirShow = false;
+      this.$router.push({ name: 'Perfil'});
+    },
+    abrirError(mensaje) {
+      this.MensajeError = mensaje;
+      this.ErrorShow = true;
+    },
+    cerrarError() {
+      this.ErrorShow = false;
     },
   },
 };

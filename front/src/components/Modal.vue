@@ -16,11 +16,11 @@
         <v-card-text>
           <div class="text-h5 pa-6">
             Proyecto desarrollado Por: <br />
-            Diego Vega <br />
-            Jorge Rojas <br />
-            Gustavo Jaramillo <br />
-            Javier Felipe<br />
-            Julian Garzon
+            Diego Fernando Vega Muñoz<br />
+            Jorge Eliecer Rojas Quiñones<br />
+            Gustavo Adolfo Ramirez Aponte<br />
+            Javier Felipe Florez<br />
+            Julian David Garzon Caballero
           </div>
         </v-card-text>
         <v-card-actions class="justify-end">
