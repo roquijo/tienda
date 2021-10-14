@@ -208,6 +208,7 @@ export default {
     },
     cerrarMensaje() {
       this.ConfirShow = false;
+      window.location.reload();
     },
     abrirError(mensaje) {
       this.MensajeError = mensaje;

@@ -84,7 +84,9 @@
           <div class="totals">
             <div class="totals-item">
               <label>SubTotal de todos los Productos:</label>
-              <div class="totals-value" id="cart-subtotal">${{subTotal}} COP</div>
+              <div class="totals-value" id="cart-subtotal">
+                ${{ subTotal }} COP
+              </div>
             </div>
             <div class="totals-item">
               <label>Envio:</label>
@@ -100,11 +102,16 @@
               </div>
             </div>
             <div class="text-center">
-              <button class="checkout" @click="pedido">REALIZAR PEDIDO!!</button>
+              <button class="checkout" @click="pedido">
+                REALIZAR PEDIDO!!
+              </button>
             </div>
           </div>
         </v-container>
       </v-card>
+      <v-btn color="success" absolute fixed fab right to="/productos">
+        <v-icon>mdi-keyboard-backspace</v-icon>
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -129,7 +136,7 @@ export default {
       listaProductos: [],
       carritoVacio: "Carrito de Compras: VACÍO!!",
       carritoLleno: "Carrito de Compras",
-      inc: 0.5
+      inc: 0.5,
     };
   },
   mounted() {
@@ -158,9 +165,7 @@ export default {
     },
     cerrarMensaje() {
       this.ConfirShow = false;
-      if (this.listaProductos == "") {
-        this.vacio = true;
-      }
+      window.location.reload();
     },
     abrirError(mensaje) {
       this.MensajeError = mensaje;
@@ -169,24 +174,24 @@ export default {
     cerrarError() {
       this.ErrorShow = false;
     },
-    pedido(){
+    pedido() {
       this.abrirMensaje("Su pedido se ha realizado con exito!!");
-    }
+    },
   },
   computed: {
     subTotal() {
       let sum = 0;
       this.listaProductos.forEach((item) => {
-        sum += (parseFloat(item.precio) * parseFloat(item.slider));
+        sum += parseFloat(item.precio) * parseFloat(item.slider);
       });
       return sum;
     },
-    envio(){
+    envio() {
       return this.subTotal * this.inc;
     },
-    totalFinal(){
+    totalFinal() {
       return this.subTotal + this.envio;
-    }
+    },
   },
 };
 </script>

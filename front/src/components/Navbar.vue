@@ -10,7 +10,7 @@
         role="navigation"
       >
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li v-if="isLogged"  class="nav-item">
+          <li v-if="isLogged" class="nav-item">
             <a
               class="nav-link active"
               aria-current="true"
@@ -41,11 +41,15 @@
           <div v-if="isLogged">
             <h5>{{ usuario }}</h5>
           </div>
-          <div  v-if="isLogged" class="pt-1 px-3">
+          <div v-if="isLogged" class="pt-1 px-3">
             <a href="/perfil"><em class="fa fa-user-circle iconos"></em></a>
           </div>
           <div class="pt-1 px-6">
-            <a href="/carrito"><em class="fa fa-shopping-cart iconos"></em></a>
+            <a href="/carrito"
+              ><em class="fa fa-shopping-cart iconos"
+                ><span v-show="!conta">({{ carrito() }})</span></em
+              ></a
+            >
           </div>
 
           <input
@@ -55,7 +59,9 @@
             aria-label="Buscar"
             v-model="id"
           />
-          <button class="btn btn-outline-success" @click="buscar()">Buscar</button>
+          <button class="btn btn-outline-success" @click="buscar()">
+            Buscar
+          </button>
         </form>
       </div>
     </div>
@@ -69,11 +75,12 @@ export default {
   components: {
     Modal,
   },
-  data(){
-    return{
-      id:null,
-      usuario: sessionStorage.getItem("usuario")
-    }
+  data() {
+    return {
+      id: null,
+      usuario: sessionStorage.getItem("usuario"),
+      conta: false,
+    };
   },
   methods: {
     cerrarSesion() {
@@ -81,14 +88,26 @@ export default {
       sessionStorage.removeItem("sesion");
       window.location.reload();
     },
-    buscar(){
+    buscar() {
       this.$router.push(`/busqueda/${this.id}`);
+    },
+    carrito(){
+      var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
+      if (Object.keys(carritoStorage).length === 0  ||
+          Object.keys(carritoStorage).length === null) {
+        this.conta = true;
+      }
+      return this.contador;
     }
   },
   computed: {
-    isLogged(){
+    isLogged() {
       return sessionStorage.getItem("sesion") != undefined;
-    }
+    },
+    contador() {
+      var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
+      return Object.keys(carritoStorage).length;
+    },
   },
 };
 </script>
@@ -100,6 +119,11 @@ export default {
 .iconos {
   color: white;
   font-size: 25px;
+}
+
+.iconos span {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 10px;
 }
 
 .btn {
