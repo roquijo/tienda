@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-btn color="primary" absolute fixed fab left to="/productos">
+      <v-icon>mdi-keyboard-backspace</v-icon>
+    </v-btn>
     <v-card elevation="15" width="50%" class="mx-auto">
       <v-row class="ma-auto">
         <v-col cols="12" sm="12" md="12">

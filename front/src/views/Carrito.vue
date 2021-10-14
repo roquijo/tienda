@@ -4,9 +4,11 @@
       <v-card max-width="650" class="ml-6" elevation="15">
         <v-list>
           <v-subheader v-show="vacio"
-            ><h4>Carrito de Compras: VACÍO!!</h4></v-subheader
+            ><h4>{{ carritoVacio }}</h4></v-subheader
           >
-          <v-subheader v-show="!vacio"><h5>Carrito de Compras</h5></v-subheader>
+          <v-subheader v-show="!vacio"
+            ><h5>{{ carritoLleno }}</h5></v-subheader
+          >
           <template v-for="producto in listaProductos">
             <v-list-item :key="producto.id">
               <v-list-item-avatar size="100">
@@ -78,21 +80,28 @@
     </v-col>
     <v-col>
       <v-card elevation="15">
-        <v-container>
+        <v-container class="pa-6">
           <div class="totals">
             <div class="totals-item">
               <label>SubTotal de todos los Productos:</label>
-              <div class="totals-value" id="cart-subtotal">71.97</div>
+              <div class="totals-value" id="cart-subtotal">${{subTotal}} COP</div>
             </div>
             <div class="totals-item">
               <label>Envio:</label>
-              <div class="totals-value" id="cart-shipping">3.60</div>
+              <div class="totals-value" id="cart-shipping">
+                ${{ envio }} COP
+              </div>
             </div>
+            <v-divider></v-divider>
             <div class="totals-item">
               <label>Total a Pagar:</label>
-              <div class="totals-value" id="cart-total">15.00</div>
+              <div class="totals-value" id="cart-total">
+                ${{ totalFinal }} COP
+              </div>
             </div>
-            <button class="checkout">REALIZAR PEDIDO!!</button>
+            <div class="text-center">
+              <button class="checkout" @click="pedido">REALIZAR PEDIDO!!</button>
+            </div>
           </div>
         </v-container>
       </v-card>
@@ -118,6 +127,9 @@ export default {
       ErrorShow: false,
       vacio: false,
       listaProductos: [],
+      carritoVacio: "Carrito de Compras: VACÍO!!",
+      carritoLleno: "Carrito de Compras",
+      inc: 0.5
     };
   },
   mounted() {
@@ -157,6 +169,24 @@ export default {
     cerrarError() {
       this.ErrorShow = false;
     },
+    pedido(){
+      this.abrirMensaje("Su pedido se ha realizado con exito!!");
+    }
+  },
+  computed: {
+    subTotal() {
+      let sum = 0;
+      this.listaProductos.forEach((item) => {
+        sum += (parseFloat(item.precio) * parseFloat(item.slider));
+      });
+      return sum;
+    },
+    envio(){
+      return this.subTotal * this.inc;
+    },
+    totalFinal(){
+      return this.subTotal + this.envio;
+    }
   },
 };
 </script>
@@ -175,8 +205,8 @@ export default {
 
 .totals {
   clear: both;
-  width: 90%;
-  text-align: right;
+  width: 100%;
+  text-align: left;
 }
 
 .totals-item {
@@ -189,10 +219,10 @@ label {
 }
 
 .checkout {
-  float: right;
+  /* float: left; */
   border: 0;
   margin-top: 20px;
-  padding: 6px 25px;
+  padding: 6px 100px;
   background-color: #6b6;
   color: #fff;
   font-size: 25px;

@@ -28,14 +28,6 @@
               @click:append="show = !show"
               filled
             ></v-text-field>
-            <!-- <v-select
-              v-model="select"
-              :items="items"
-              :rules="[(v) => !!v || 'Este campo es requerido']"
-              label="Ingresar como:"
-              required
-              filled
-            ></v-select> -->
             <p class="mb-0">
               No tiene cuenta? <a href="/registro">Registrese</a>.
             </p>
@@ -44,10 +36,19 @@
             <v-img src="../Images/cuenta.png"></v-img>
           </v-col>
           <v-col align-self="center" cols="12" sm="12" md="10">
+            <v-alert dense prominent type="error" v-model="ErrorShow">
+              <v-row align="center">
+                <v-col class="grow">
+                  {{ MensajeError }}
+                </v-col>
+                <v-col class="shrink">
+                  <v-btn @click="cerrarError()">Cerrar</v-btn>
+                </v-col>
+              </v-row>
+            </v-alert>
             <v-btn
               :disabled="!valid"
               class="mr-4"
-              
               color="primary"
               @click="validar()"
             >
@@ -61,11 +62,11 @@
               :snackbar="ConfirShow"
               :close="cerrarMensaje"
             ></ConfirMensaje>
-            <MensajeError
+            <!-- <MensajeError
               :mensaje="MensajeError"
               :snackbar="ErrorShow"
               :close="cerrarError"
-            ></MensajeError>
+            ></MensajeError> -->
           </v-col>
         </v-row>
       </v-card>
@@ -76,11 +77,11 @@
 <script>
 import { validateUser } from "../services/Usuario.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
-import MensajeError from "../../src/components/MensajeError.vue";
+// import MensajeError from "../../src/components/MensajeError.vue";
 export default {
   components: {
     ConfirMensaje,
-    MensajeError,
+    // MensajeError,
   },
   data: () => ({
     valid: true,
@@ -106,7 +107,12 @@ export default {
           sessionStorage.setItem("sesion", true);
           this.abrirMensaje("Se ha iniciado sesión");
         })
-        .catch(() => this.abrirError("Error con el ingreso de usuario"));
+        .catch((err) => {
+          // this.abrirError("Error con el ingreso de usuario"
+          // console.log("error: ", err.response);
+          this.ErrorShow = true;
+          this.MensajeError = err.response.data.mensaje;
+        });
     },
     clear() {
       this.email = "";
@@ -119,10 +125,10 @@ export default {
       this.ConfirShow = true;
     },
     cerrarMensaje() {
-      this.ConfirShow = false;  
-      this.$router.push({ name: 'Productos'});
-      this.$emit("isLogged"); 
-    }, 
+      this.ConfirShow = false;
+      this.$router.push({ name: "Productos" });
+      this.$emit("isLogged");
+    },
     abrirError(mensaje) {
       this.MensajeError = mensaje;
       this.ErrorShow = true;
