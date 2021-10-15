@@ -136,7 +136,7 @@ export default {
       listaProductos: [],
       carritoVacio: "Carrito de Compras: VACÍO!!",
       carritoLleno: "Carrito de Compras",
-      inc: 0.5,
+      inc: 0.05,
     };
   },
   mounted() {
@@ -175,7 +175,11 @@ export default {
       this.ErrorShow = false;
     },
     pedido() {
-      this.abrirMensaje("Su pedido se ha realizado con exito!!");
+      if (this.listaProductos=="") {
+        this.abrirError("No hay productos en el carrito");
+      } else {
+        this.abrirError("Su pedido se ha realizado con exito!!");
+        }
     },
   },
   computed: {

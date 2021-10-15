@@ -29,7 +29,13 @@ module.exports = class ProductosController {
     static async insert(req, res) {
         try {
             const producto = req.body;
-            const nuevoProducto = await productoModel.create(producto);
+            if(req.file != undefined || req.file != null){
+                const imageName = req.file.filename;
+                if (imageName != undefined || imageName != null || imageName != "") {
+                    producto.foto= "/" + imageName;
+                }  
+            }
+            const nuevoProducto = await productoModel.create(producto);               
             res.status(201).json(nuevoProducto);
         } catch (err) {
             res.status(400).json({ mensaje: err.mensaje });
@@ -40,10 +46,26 @@ module.exports = class ProductosController {
         try {
             const id = req.params.id;
             const producto = req.body;
+            if(req.file != null || req.file != undefined){
+                producto.foto = "/" + req.file.filename;
+            }
             const actualizarproductos = await productoModel.updateOne({"id":id},producto);
             res.status(200).json(actualizarproductos);
         } catch (err) {
             res.status(400).json({ mensaje: err.mensaje });
+        }
+    }
+
+    static async updateProductoConFoto(req, res) {
+        try {
+            const id = req.params.id;
+            const producto = req.body;
+            const imageName = req.file.filename;
+            producto.foto = "/" + imageName;
+            await productoModel.updateOne({ "id": id }, producto);
+            res.status(200).json();
+        } catch (err) {
+            res.status(400).json({ message: err.message });
         }
     }
 

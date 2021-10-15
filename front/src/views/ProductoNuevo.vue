@@ -38,11 +38,12 @@
             ></v-text-field>
             <v-file-input
               v-show="show"
+              accept="image/png, image/jpeg, image/bmp"
               label="Subir archivo"
               prepend-icon="mdi-upload"
               append-outer-icon="mdi-paperclip"
               filled
-              class="v-model='foto'"
+              v-model="foto"
               show-size
               dense
               truncate-length="15"
@@ -104,7 +105,9 @@
 import {
   insertProducto,
   getProducto,
-  updateProducto
+  updateProducto,
+  updateProductoConFoto,
+  insertProductoConFoto
 } from "../../src/services/Productos.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
 import MensajeError from "../../src/components/MensajeError.vue";
@@ -120,7 +123,7 @@ export default {
       id: 0,
       nombre: "",
       precio: 0,
-      foto: "",
+      foto: null,
       especificacion: "",
       isEdit: false,
       ConfirMensaje: "",
@@ -161,14 +164,28 @@ export default {
         this.abrirError("Ingrese los campos requeridos");
         return;
       }
-      const producto = {
-        id: this.id,
-        nombre: this.nombre,
-        precio: this.precio,
-        foto: this.foto,
-        especificacion: this.especificacion,
-      };
-      insertProducto(producto)
+      let request = null;
+
+      if (this.foto != null && this.foto != undefined) {
+        const producto = new FormData();
+        producto.append("id",this.id);
+        producto.append("nombre",this.nombre);
+        producto.append("precio",this.precio);
+        producto.append("especificacion",this.especificacion);
+        producto.append("foto", this.foto);
+
+        request = insertProductoConFoto(producto);
+      } else {
+        const producto = {
+          id: this.id,
+          nombre: this.nombre,
+          precio: this.precio,
+          foto: this.foto,
+          especificacion: this.especificacion,
+        };
+        request = insertProducto(producto)
+      }
+      request
         .then((response) =>
           this.abrirMensaje("Se ha agregado el producto: " + response.data.id)
         )
@@ -186,14 +203,29 @@ export default {
         this.abrirError("Ingrese los campos requeridos");
         return;
       }
-      const producto = {
-        id: this.id,
-        nombre: this.nombre,
-        precio: this.precio,
-        foto: this.foto,
-        especificacion: this.especificacion,
-      };
-      updateProducto(this.id, producto)
+      let request = null;
+      
+      if (this.foto != null && this.foto != undefined) {
+        const producto = new FormData();
+        producto.append("id",this.id);
+        producto.append("nombre",this.nombre);
+        producto.append("precio",this.precio);
+        producto.append("especificacion",this.especificacion);
+        producto.append("foto", this.foto);
+        request = updateProductoConFoto(this.id, producto);
+      } else {
+        const producto = {
+          id: this.id,
+          nombre: this.nombre,
+          precio: this.precio,
+          foto: this.foto,
+          especificacion: this.especificacion,
+        };
+console.log("es aqui")
+
+        request = updateProducto(producto)
+      }
+      request
         .then(() =>
           this.abrirMensaje("Se ha actualizado el producto: " + this.id)
         )

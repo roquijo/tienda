@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 // Agregar las rutas a escuchar
 app.use("/api", require("./routes/routes"));
 
-// 
+// Carga de archivos
 app.use(express.static("uploads"))
 
 // Iniciar el servidor
