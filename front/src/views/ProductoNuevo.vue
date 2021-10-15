@@ -7,7 +7,7 @@
       <v-row class="ma-auto">
         <v-col cols="12" sm="12" md="12">
           <v-form class="mx-auto" ref="form">
-            <h2 class="text-center mb-5">{{title}}</h2>
+            <h2 class="text-center mb-5">{{ title }}</h2>
             <v-text-field
               v-model="nombre"
               label="Producto *"
@@ -37,7 +37,7 @@
               prefix="$"
             ></v-text-field>
             <v-file-input
-              v-show="show"
+              v-show="!show"
               accept="image/png, image/jpeg, image/bmp"
               label="Subir archivo"
               prepend-icon="mdi-upload"
@@ -50,7 +50,7 @@
               @click:append-outer="show = !show"
             ></v-file-input>
             <v-text-field
-              v-show="!show"
+              v-show="show"
               prepend-icon="mdi-paperclip"
               append-outer-icon="mdi-upload"
               v-model="foto"
@@ -71,16 +71,36 @@
               dense
             ></v-text-field>
             <div class="text-center mt-4">
-              <v-btn color="primary" v-if="!isEdit" class="mr-5" @click="guardar()">
+              <v-btn
+                color="primary"
+                v-if="!isEdit"
+                class="mr-5"
+                @click="guardar()"
+              >
                 Enviar
               </v-btn>
-              <v-btn color="success" v-if="isEdit" class="mr-5" @click="actualizar()">
+              <v-btn
+                color="success"
+                v-if="isEdit"
+                class="mr-5"
+                @click="actualizar()"
+              >
                 Actualizar
               </v-btn>
-              <v-btn color="secondary" v-if="!isEdit" class="ml-5" @click="reset()">
+              <v-btn
+                color="secondary"
+                v-if="!isEdit"
+                class="ml-5"
+                @click="reset()"
+              >
                 Limpiar
               </v-btn>
-              <v-btn color="error" v-if="isEdit" class="ml-5" @click="cancelar()">
+              <v-btn
+                color="error"
+                v-if="isEdit"
+                class="ml-5"
+                @click="cancelar()"
+              >
                 Cancelar
               </v-btn>
             </div>
@@ -107,7 +127,7 @@ import {
   getProducto,
   updateProducto,
   updateProductoConFoto,
-  insertProductoConFoto
+  insertProductoConFoto,
 } from "../../src/services/Productos.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
 import MensajeError from "../../src/components/MensajeError.vue";
@@ -168,10 +188,10 @@ export default {
 
       if (this.foto != null && this.foto != undefined) {
         const producto = new FormData();
-        producto.append("id",this.id);
-        producto.append("nombre",this.nombre);
-        producto.append("precio",this.precio);
-        producto.append("especificacion",this.especificacion);
+        producto.append("id", this.id);
+        producto.append("nombre", this.nombre);
+        producto.append("precio", this.precio);
+        producto.append("especificacion", this.especificacion);
         producto.append("foto", this.foto);
 
         request = insertProductoConFoto(producto);
@@ -183,7 +203,7 @@ export default {
           foto: this.foto,
           especificacion: this.especificacion,
         };
-        request = insertProducto(producto)
+        request = insertProducto(producto);
       }
       request
         .then((response) =>
@@ -203,28 +223,42 @@ export default {
         this.abrirError("Ingrese los campos requeridos");
         return;
       }
-      let request = null;
-      
-      if (this.foto != null && this.foto != undefined) {
-        const producto = new FormData();
-        producto.append("id",this.id);
-        producto.append("nombre",this.nombre);
-        producto.append("precio",this.precio);
-        producto.append("especificacion",this.especificacion);
-        producto.append("foto", this.foto);
-        request = updateProductoConFoto(this.id, producto);
-      } else {
-        const producto = {
-          id: this.id,
-          nombre: this.nombre,
-          precio: this.precio,
-          foto: this.foto,
-          especificacion: this.especificacion,
-        };
-console.log("es aqui")
 
-        request = updateProducto(producto)
-      }
+      const isValidUrl = (string) => {
+        try {
+          new URL(string);
+          return true;
+        } catch (_) {
+          return false;
+        }
+      };
+
+      let request = null;
+
+      if (
+        this.foto != null &&
+        this.foto != undefined && 
+        !isValidUrl(this.foto)) 
+      {
+          const producto = new FormData();
+          producto.append("id", this.id);
+          producto.append("nombre", this.nombre);
+          producto.append("precio", this.precio);
+          producto.append("especificacion", this.especificacion);
+          producto.append("foto", this.foto);
+          request = updateProductoConFoto(this.id, producto);
+        }
+        else {
+          const producto = {
+            id: this.id,
+            nombre: this.nombre,
+            precio: this.precio,
+            foto: this.foto,
+            especificacion: this.especificacion,
+          };
+          request = updateProducto(this.id, producto);
+        }
+        
       request
         .then(() =>
           this.abrirMensaje("Se ha actualizado el producto: " + this.id)
@@ -249,9 +283,9 @@ console.log("es aqui")
     reset() {
       this.$refs.form.reset();
     },
-    cancelar(){
+    cancelar() {
       this.$router.push("/productos");
-    }
+    },
   },
 };
 </script>
