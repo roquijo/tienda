@@ -15,12 +15,19 @@ app.use("/api", require("./routes/routes"));
 // Carga de archivos
 app.use(express.static("uploads"))
 
-// Iniciar el servidor
-const port = process.env.PORT;
-app.listen(port, () => console.log(`Servidor en http://localhost:${port}`));
-
 // Configurar la conexión a la base de datos
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DB_URI)
     .then(() => console.log("Conectado a la Base de datos"))
     .catch(err => console.error(err))
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(__dirname + "/site/"));
+    app.get("*", (req, res) => {
+        res.sendFile(__dirname + "/site/index.html");
+    });
+}
+
+// Iniciar el servidor
+const port = process.env.PORT;
+app.listen(port, () => console.log(`Servidor en http://localhost:${port}`));

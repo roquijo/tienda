@@ -2,13 +2,16 @@
   <!-- Aquí aparecen los compones en la app -->
   <v-app>
     <!-- Aquí se muestra el Nav Bar -->
-    <Navbar :key="isLogged"></Navbar>
+    <navbar :key="isLogged">
+      <Navbar></Navbar>
+    </navbar>
+
     <!-- Auí está el contenido principal -->
     <v-main>
       <v-container fluid>
         <!-- Aquí se muestran las vistas -->
         <transition name="slide" mode="out-in">
-          <router-view @isLogged="isLogged=true" />
+          <router-view @isLogged="isLogged = true" />
         </transition>
       </v-container>
     </v-main>
@@ -36,7 +39,7 @@ export default {
 
 <style>
 .slide-enter-active,
-.slide-leave-active{
+.slide-leave-active {
   transition: opacity 1s, transform 1s;
 }
 
