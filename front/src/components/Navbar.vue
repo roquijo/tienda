@@ -93,11 +93,13 @@ export default {
     },
     carrito(){
       var carritoStorage = JSON.parse(localStorage.getItem("carritoCompra"));
-      if (Object.keys(carritoStorage).length === 0  ||
-          Object.keys(carritoStorage).length === null) {
-        this.conta = true;
+      if(carritoStorage != undefined && carritoStorage != null){
+        if ( Object.keys(carritoStorage).length === 0  ||
+            Object.keys(carritoStorage).length === null) {
+          this.conta = true;
+        }
+        return this.contador;
       }
-      return this.contador;
     }
   },
   computed: {

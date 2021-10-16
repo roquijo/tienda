@@ -37,7 +37,7 @@
               prefix="$"
             ></v-text-field>
             <v-file-input
-              v-show="!show"
+              v-show="show"
               accept="image/png, image/jpeg, image/bmp"
               label="Subir archivo"
               prepend-icon="mdi-upload"
@@ -50,10 +50,10 @@
               @click:append-outer="show = !show"
             ></v-file-input>
             <v-text-field
-              v-show="show"
+              v-show="!show"
               prepend-icon="mdi-paperclip"
               append-outer-icon="mdi-upload"
-              v-model="foto"
+              v-model="fotoURL"
               label="URL Imagen"
               placeholder="Ingrese la URL"
               filled
@@ -144,6 +144,7 @@ export default {
       nombre: "",
       precio: 0,
       foto: null,
+      fotoURL: null,
       especificacion: "",
       isEdit: false,
       ConfirMensaje: "",
@@ -163,7 +164,7 @@ export default {
           this.id = producto.id;
           this.nombre = producto.nombre;
           this.precio = producto.precio;
-          this.foto = producto.foto;
+          this.fotoURL = producto.foto;
           this.especificacion = producto.especificacion;
           this.title = "Editar producto";
           this.isEdit = true;
@@ -200,7 +201,7 @@ export default {
           id: this.id,
           nombre: this.nombre,
           precio: this.precio,
-          foto: this.foto,
+          foto: this.fotoURL,
           especificacion: this.especificacion,
         };
         request = insertProducto(producto);
@@ -224,22 +225,13 @@ export default {
         return;
       }
 
-      const isValidUrl = (string) => {
-        try {
-          new URL(string);
-          return true;
-        } catch (_) {
-          return false;
-        }
-      };
-
       let request = null;
 
       if (
         this.foto != null &&
-        this.foto != undefined && 
-        !isValidUrl(this.foto)) 
-      {
+        this.foto != undefined &&
+        this.show
+      ) {
           const producto = new FormData();
           producto.append("id", this.id);
           producto.append("nombre", this.nombre);
@@ -247,18 +239,17 @@ export default {
           producto.append("especificacion", this.especificacion);
           producto.append("foto", this.foto);
           request = updateProductoConFoto(this.id, producto);
-        }
-        else {
-          const producto = {
-            id: this.id,
-            nombre: this.nombre,
-            precio: this.precio,
-            foto: this.foto,
-            especificacion: this.especificacion,
-          };
-          request = updateProducto(this.id, producto);
-        }
-        
+      } else {
+        const producto = {
+          id: this.id,
+          nombre: this.nombre,
+          precio: this.precio,
+          foto: this.fotoURL,
+          especificacion: this.especificacion,
+        };
+        request = updateProducto(this.id, producto);
+      }
+
       request
         .then(() =>
           this.abrirMensaje("Se ha actualizado el producto: " + this.id)

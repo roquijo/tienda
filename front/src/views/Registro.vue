@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-card elevation="15">
         <v-row class="mt-4 mx-auto">
@@ -116,7 +116,7 @@
         </v-row>
       </v-card>
     </v-container>
-  </v-container>
+  </v-form>
 </template>
 
 <script>
@@ -128,42 +128,42 @@ export default {
     ConfirMensaje,
     MensajeError,
   },
-  data(){
-    return{
-    nombre: "",
-    nameRules: [
-      (v) => !!v || "Nombre es requerido",
-      (v) => (v && v.length <= 40) || "Nombre debe ser menor que 40 caractares",
-    ],
-    apellido: "",
-    lastnameRules: [
-      (v) => !!v || "Apellido es requerido",
-      (v) => (v && v.length <= 40) || "Apellido debe ser menor que 40 caractares",
-    ],
-    usuario: "",
-    nicknameRules: [
-      (v) => !!v || "Nickname es requerido"
-    ],
-    correo: "",
-    emailRules: [
-      (v) => !!v || "E-mail es requerido",
-      (v) => /.+@.+\..+/.test(v) || "E-mail debe ser válido",
-    ],
-    show1: false,
-    contraseña: "",
-    confirPass: "",
-    rules: {
-      min: (v) => v.length >= 8 || "Mínimo 8 caracteres",
-    }, 
-    ConfirMensaje: "",
-    ConfirShow: false,
-    MensajeError: "",
-    ErrorShow: false, 
-    }    
+  data() {
+    return {
+      nombre: "",
+      nameRules: [
+        (v) => !!v || "Nombre es requerido",
+        (v) =>
+          (v && v.length <= 40) || "Nombre debe ser menor que 40 caractares",
+      ],
+      apellido: "",
+      lastnameRules: [
+        (v) => !!v || "Apellido es requerido",
+        (v) =>
+          (v && v.length <= 40) || "Apellido debe ser menor que 40 caractares",
+      ],
+      usuario: "",
+      nicknameRules: [(v) => !!v || "Nickname es requerido"],
+      correo: "",
+      emailRules: [
+        (v) => !!v || "E-mail es requerido",
+        (v) => /.+@.+\..+/.test(v) || "E-mail debe ser válido",
+      ],
+      show1: false,
+      contraseña: "",
+      confirPass: "",
+      rules: {
+        min: (v) => v.length >= 8 || "Mínimo 8 caracteres",
+      },
+      ConfirMensaje: "",
+      ConfirShow: false,
+      MensajeError: "",
+      ErrorShow: false,
+    };
   },
   methods: {
     validate() {
-      if (       
+      if (
         this.nombre == undefined ||
         this.nombre == "" ||
         this.apellido == undefined ||
@@ -183,12 +183,14 @@ export default {
         apellido: this.apellido,
         usuario: this.usuario,
         correo: this.correo,
-        contraseña: this.contraseña,  
+        contraseña: this.contraseña,
       };
       insertUsuario(usuario)
         .then((response) =>
-          this.abrirMensaje("Se ha agregado el usuario: " + response.data.usuario)
+          this.abrirMensaje(
+            "Se ha agregado el usuario: " + response.data.usuario
           )
+        )
         .catch(() => this.abrirError("Error al guardar el usuario"));
     },
     reset() {
