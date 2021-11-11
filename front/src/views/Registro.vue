@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import { insertUsuario } from "../../src/services/Usuario.Service";
+import { insertUsuario } from "../services/Usuario.Service";
 import ConfirMensaje from "../../src/components/ConfirMensaje.vue";
 import MensajeError from "../../src/components/MensajeError.vue";
 export default {
