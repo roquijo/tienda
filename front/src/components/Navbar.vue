@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="/productos"
-        ><img id="logo" src="../Images/tienda_neg.png" alt="" /> My Shop Easy</a
+        ><img id="logo" src="../Images/ecoPlatform.png" alt="" /> EcoPlatform</a
       >
       <div
         class="collapse navbar-collapse"

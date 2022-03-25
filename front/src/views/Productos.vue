@@ -76,17 +76,7 @@
             >
           </div>
         </div>
-        <v-btn
-          color="success"
-          absolute
-          fixed
-          fab
-          right
-          to="/productonuevo"
-          v-if="isLogged"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
+        
         <ConfirMensaje
           :mensaje="ConfirMensaje"
           :snackbar="ConfirShow"
@@ -97,8 +87,20 @@
           :snackbar="ErrorShow"
           :close="cerrarError"
         ></MensajeError>
+        
       </v-col>
     </v-row>
+    <v-btn
+          color="success"
+          absolute
+          fixed
+          fab
+          right
+          to="/productonuevo"
+          v-if="isLogged"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
   </v-container>
 </template>
 <script>
